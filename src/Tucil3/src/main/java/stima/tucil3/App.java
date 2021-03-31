@@ -5,6 +5,8 @@
  */
 package stima.tucil3;
 
+import com.google.maps.*;
+import stima.constants.*;
 /**
  *
  * @author PERSONAL
@@ -13,6 +15,7 @@ public class App extends javax.swing.JFrame
 {
     private int cnt = 0;
     private String x = "aaaa";
+    GeoApiContext context = new GeoApiContext.Builder().apiKey(Constants.apiKey).build();
     /**
      * Creates new form App
      */
