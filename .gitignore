@@ -24,3 +24,7 @@ hs_err_pid*
 
 # Spek
 *.pdf
+
+# vscode
+*.vscode
+*.vs
