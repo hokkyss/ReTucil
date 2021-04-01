@@ -17,16 +17,30 @@ import stima.constants.*;
  */
 public class App extends javax.swing.JFrame
 {
-    File inputFile;
-    Scanner fileInput;
-    String[] nodes;
+    private File inputFile;
+    private Scanner fileInput;
     
-    ArrayList<ArrayList<Integer>> adjacencyMatrix;
+    private String firstNodeChosen;
+    private Integer firstNodeIndex;
+    private String secondNodeChosen;
+    private Integer secondNodeIndex;
+    
+    // Keperluan algoritma
+    private Double[][] adjacencyMatrix;
+    private ArrayList<Trituple> nodes;
+    private Integer numOfNodes;
     /**
      * Creates new form App
      */
     public App(){
         initComponents();
+        this.inputFile = null;
+        this.fileInput = null;
+        this.firstNodeChosen = null;
+        this.secondNodeChosen = null;
+        this.adjacencyMatrix = null;
+        this.nodes = null;
+        this.numOfNodes = null;
     }
 
     /**
@@ -206,30 +220,88 @@ public class App extends javax.swing.JFrame
     private void convertFileToGraph()
     {
         int N = fileInput.nextInt();
+        this.numOfNodes = N;
         
         // dummy untuk memindahkan baris
         fileInput.nextLine();
         
-        // beri tambahan space
-        nodes = new String[N + 3];
+        nodes = new ArrayList<>();
+        
+        Double lat, lng;
+        String name;
         
         for(int i = 1; i <= N; i++)
         {
-            nodes[i] = fileInput.nextLine();
+            lat = fileInput.nextDouble();
+            lng = fileInput.nextDouble();
+            name = fileInput.nextLine().trim();
+            nodes.add(new Trituple(lat, lng, name));
         }
-        adjacencyMatrix = new ArrayList<>();
-        adjacencyMatrix.add(new ArrayList<Integer>());
         
-        for(int i = 1; i <= N; i++)
+        adjacencyMatrix = new Double[N][N];
+        for(int i = 0; i < N; i++)
         {
-            ArrayList<Integer> temp = new ArrayList<>();
-            for(int j = 1; j <= N; j++)
+            for(int j = 0; j < N; j++)
             {
-                int a = fileInput.nextInt();
-                temp.add(a);
+                adjacencyMatrix[i][j] = fileInput.nextDouble();
             }
-            adjacencyMatrix.add(temp);
         }
-        System.out.println(adjacencyMatrix);
+    }
+    
+    private void AStarAlgorithm()
+    {
+        PriorityQueue<PriorityQueueEntry> queue = new PriorityQueue<>();
+        boolean[] visited = new boolean[numOfNodes];
+        
+        queue.add(new PriorityQueueEntry(0, 0, firstNodeIndex, new ArrayList<>()));
+        
+        PriorityQueueEntry top = null;
+        Double currentDistance = null;
+        Double estimatedDistance = null;
+        Integer currentNodeIndex = null;
+        ArrayList<Integer> paths = null;
+        
+        while(!queue.isEmpty())
+        {
+            top = queue.poll();
+            currentDistance = top.distanceSoFar;
+            estimatedDistance = top.sum;
+            currentNodeIndex = top.nodeIndex;
+            paths = top.path;
+            
+            if(visited[currentNodeIndex]) continue;
+            
+            if(currentNodeIndex == secondNodeIndex) break;
+            
+            visited[currentNodeIndex] = true;
+            for(int i = 0; i <= numOfNodes; i++)
+            {
+                if(i == currentNodeIndex) continue;
+                
+                Double nextDistance = currentDistance + adjacencyMatrix[currentNodeIndex][i];
+                Double nextEstimatedDistance = currentDistance + nodes.get(i).straightLineDistance(nodes.get(currentNodeIndex));
+                Integer nextNode = i;
+                
+                ArrayList<Integer> newPath = new ArrayList<>();
+                // copy semua paths ke dalam newPath
+                for(Integer passedNodes : paths)
+                {
+                    newPath.add(passedNodes);
+                }
+                newPath.add(currentNodeIndex);
+                
+                queue.add(new PriorityQueueEntry(nextDistance, nextEstimatedDistance, nextNode, newPath));
+            }
+        }
+        
+        // sudah sampai tujuan, atau queue kosong
+        if(queue.isEmpty())
+        {
+            return;
+        }
+        // sudah pasti sampai tujuan
+        
+        /* TODO:
+            Implementasikan path yang diambil ke MAP API */
     }
 }
