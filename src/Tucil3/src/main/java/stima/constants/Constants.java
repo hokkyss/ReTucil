@@ -10,5 +10,10 @@ package stima.constants;
  * @author PERSONAL
  */
 public class Constants {
-    public static String apiKey = "AIzaSyBi9RgHgPabzADyC-RQThD3mi4hCyWLxD4";
+    private static String apiKey = "AIzaSyBi9RgHgPabzADyC-RQThD3mi4hCyWLxD4";
+    
+    public static String getApiKey()
+    {
+        return apiKey;
+    }
 }
