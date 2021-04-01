@@ -10,7 +10,6 @@ import java.io.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileFilter;
 
-import com.google.maps.*;
 import stima.constants.*;
 /**
  *
@@ -20,13 +19,13 @@ public class App extends javax.swing.JFrame
 {
     File inputFile;
     Scanner fileInput;
-    GeocodingApiRequest A = new GeocodingApiRequest(Constants.context);
     String[] nodes;
+    
     ArrayList<ArrayList<Integer>> adjacencyMatrix;
     /**
      * Creates new form App
      */
-    public App() {
+    public App(){
         initComponents();
     }
 
@@ -139,7 +138,7 @@ public class App extends javax.swing.JFrame
 
     private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseButtonActionPerformed
         try
-        {
+        {    
             FileFilter filter = new FileNameExtensionFilter("Text files", "txt");
             this.browseDialog.setFileFilter(filter);
             this.browseDialog.showOpenDialog(this);
