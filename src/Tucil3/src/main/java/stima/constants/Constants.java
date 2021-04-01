@@ -5,6 +5,8 @@
  */
 package stima.constants;
 
+import com.google.maps.*;
+
 /**
  *
  * @author PERSONAL
@@ -16,4 +18,6 @@ public class Constants {
     {
         return apiKey;
     }
+    
+    public static final GeoApiContext context = new GeoApiContext.Builder().apiKey(Constants.getApiKey()).build();
 }

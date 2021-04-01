@@ -19,8 +19,8 @@ import stima.constants.*;
 public class App extends javax.swing.JFrame
 {
     File inputFile;
-    GeoApiContext context = new GeoApiContext.Builder().apiKey(Constants.getApiKey()).build();
     Scanner fileInput;
+    GeocodingApiRequest A = new GeocodingApiRequest(Constants.context);
     String[] nodes;
     ArrayList<ArrayList<Integer>> adjacencyMatrix;
     /**
