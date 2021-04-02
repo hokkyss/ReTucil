@@ -10,7 +10,7 @@ import java.io.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileFilter;
 
-import stima.constants.*;
+import stima.constants.Constants;
 /**
  *
  * @author PERSONAL
