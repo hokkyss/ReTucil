@@ -4,15 +4,19 @@
  * and open the template in the editor.
  */
 package stima.tucil3;
-import static com.teamdev.jxbrowser.engine.RenderingMode.HARDWARE_ACCELERATED;
+// java
+import java.util.*;
+import java.io.*;
 
+// java and browser
+import static com.teamdev.jxbrowser.engine.RenderingMode.HARDWARE_ACCELERATED;
 import com.teamdev.jxbrowser.browser.Browser;
 import com.teamdev.jxbrowser.engine.Engine;
 import com.teamdev.jxbrowser.engine.EngineOptions;
 import com.teamdev.jxbrowser.view.swing.BrowserView;
 import java.awt.BorderLayout;
-import java.util.*;
-import java.io.*;
+
+// java UI
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -21,15 +25,18 @@ import javax.swing.filechooser.FileFilter;
 import stima.constants.Constants;
 /**
  *
- * @author PERSONAL
+ * @author Re:Tucil
  */
 public class App extends javax.swing.JFrame
 {
     private File inputFile;
     private Scanner fileInput;
     
+    // user's choice
+    private boolean isAddingFirstNode;
     private String firstNodeChosen;
     private Integer firstNodeIndex;
+    private boolean isAddingSecondNode;
     private String secondNodeChosen;
     private Integer secondNodeIndex;
     
@@ -46,7 +53,9 @@ public class App extends javax.swing.JFrame
         this.inputFile = null;
         this.fileInput = null;
         this.firstNodeChosen = null;
+        this.firstNodeIndex = null;
         this.secondNodeChosen = null;
+        this.secondNodeIndex = null;
         this.adjacencyMatrix = null;
         this.nodes = null;
         this.numOfNodes = null;
@@ -65,7 +74,12 @@ public class App extends javax.swing.JFrame
         jLabel1 = new javax.swing.JLabel();
         browseButton = new javax.swing.JButton();
         fileNameLabel = new javax.swing.JLabel();
-        MapsPanel = new javax.swing.JPanel();
+        mapsPanel = new javax.swing.JPanel();
+        chooseFirstNode = new javax.swing.JComboBox<>();
+        firstNodeWarning = new javax.swing.JLabel();
+        secondNodeWarning = new javax.swing.JLabel();
+        chooseSecondNode = new javax.swing.JComboBox<>();
+        submitButton = new javax.swing.JButton();
 
         browseDialog.setAcceptAllFileFilterUsed(false);
         browseDialog.setCurrentDirectory(new java.io.File("C:\\Users\\PERSONAL\\Desktop\\KULIAH\\IF2211 STIMA\\Tugas Kecil 3\\test"));
@@ -84,33 +98,68 @@ public class App extends javax.swing.JFrame
             }
         });
 
-        fileNameLabel.setText("file not found!");
+        fileNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        fileNameLabel.setText("File not found!");
 
-        MapsPanel.setBackground(new java.awt.Color(255, 255, 255));
+        mapsPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        javax.swing.GroupLayout MapsPanelLayout = new javax.swing.GroupLayout(MapsPanel);
-        MapsPanel.setLayout(MapsPanelLayout);
-        MapsPanelLayout.setHorizontalGroup(
-            MapsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout mapsPanelLayout = new javax.swing.GroupLayout(mapsPanel);
+        mapsPanel.setLayout(mapsPanelLayout);
+        mapsPanelLayout.setHorizontalGroup(
+            mapsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 675, Short.MAX_VALUE)
         );
-        MapsPanelLayout.setVerticalGroup(
-            MapsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        mapsPanelLayout.setVerticalGroup(
+            mapsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
+
+        chooseFirstNode.setAutoscrolls(true);
+        chooseFirstNode.setEnabled(false);
+        chooseFirstNode.setName("chooseFirstNode"); // NOI18N
+        chooseFirstNode.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chooseFirstNodeItemStateChanged(evt);
+            }
+        });
+
+        firstNodeWarning.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        firstNodeWarning.setText(Constants.chooseFileMessage);
+
+        secondNodeWarning.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        secondNodeWarning.setText(Constants.chooseFileMessage);
+
+        chooseSecondNode.setAutoscrolls(true);
+        chooseSecondNode.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        chooseSecondNode.setEnabled(false);
+        chooseSecondNode.setName("chooseSecondNode"); // NOI18N
+        chooseSecondNode.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                chooseSecondNodeItemStateChanged(evt);
+            }
+        });
+
+        submitButton.setText("Submit");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(fileNameLabel)
-                    .addComponent(browseButton)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(chooseFirstNode, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(secondNodeWarning, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(chooseSecondNode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(firstNodeWarning, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(browseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(submitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fileNameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(MapsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(mapsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,11 +167,21 @@ public class App extends javax.swing.JFrame
                 .addGap(27, 27, 27)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(browseButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(fileNameLabel)
-                .addContainerGap(393, Short.MAX_VALUE))
-            .addComponent(MapsPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(browseButton)
+                .addGap(65, 65, 65)
+                .addComponent(firstNodeWarning)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chooseFirstNode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(secondNodeWarning)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chooseSecondNode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(66, 66, 66)
+                .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(100, Short.MAX_VALUE))
+            .addComponent(mapsPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -138,6 +197,13 @@ public class App extends javax.swing.JFrame
             inputFile = browseDialog.getSelectedFile();
             fileInput = new Scanner(inputFile);
             convertFileToGraph();
+            populateFirstNodeChoice();
+            
+            this.firstNodeWarning.setText(Constants.canChooseFirstNodeMessage);
+            this.chooseFirstNode.setEnabled(true);
+            
+            this.secondNodeWarning.setText(Constants.cannotChooseSecondNodeMessage);
+            this.chooseSecondNode.setEnabled(false);
             
             this.browseButton.setText("Change");
             fileNameLabel.setText(inputFile.getName());
@@ -145,9 +211,59 @@ public class App extends javax.swing.JFrame
         catch (Exception e)
         {
             this.browseButton.setText("Browse");
-            fileNameLabel.setText("file not found");
+            fileNameLabel.setText(Constants.fileNotFoundMessage);
+            
+            firstNodeWarning.setText(Constants.chooseFileMessage);
+            chooseFirstNode.setEnabled(false);
+            secondNodeWarning.setText(Constants.chooseFileMessage);
         }
     }//GEN-LAST:event_browseButtonActionPerformed
+
+    private void chooseSecondNodeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chooseSecondNodeItemStateChanged
+        if(this.isAddingSecondNode) return;
+        this.secondNodeChosen = this.chooseSecondNode.getSelectedItem().toString();
+
+        if(this.secondNodeChosen.equals(Constants.emptyString))
+        {
+            this.secondNodeChosen = null;
+            return;
+        }
+        
+        for(Trituple t : this.nodes)
+        {
+            if(t.name.equals(this.secondNodeChosen))
+            {
+                this.secondNodeIndex = t.index;
+                break;
+            }
+        }
+    }//GEN-LAST:event_chooseSecondNodeItemStateChanged
+
+    private void chooseFirstNodeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chooseFirstNodeItemStateChanged
+        if(this.isAddingFirstNode) return;
+
+        this.firstNodeChosen = this.chooseFirstNode.getSelectedItem().toString();
+        if(this.firstNodeChosen.equals(Constants.emptyString))
+        {
+            this.firstNodeChosen = null;
+            secondNodeWarning.setText(Constants.cannotChooseSecondNodeMessage);
+            chooseSecondNode.setSelectedItem(Constants.emptyString);
+            chooseSecondNode.setEnabled(false);
+            return;
+        }
+        
+        for(Trituple t : this.nodes)
+        {
+            if(t.name.equals(this.firstNodeChosen))
+            {
+                this.firstNodeIndex = t.index;
+                break;
+            }
+        }
+        populateSecondNodeChoice();
+        this.secondNodeWarning.setText(Constants.canChooseSecondNodeMessage);
+        this.chooseSecondNode.setEnabled(true);
+    }//GEN-LAST:event_chooseFirstNodeItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -185,18 +301,22 @@ public class App extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel MapsPanel;
     private javax.swing.JButton browseButton;
     private javax.swing.JFileChooser browseDialog;
+    private javax.swing.JComboBox<String> chooseFirstNode;
+    private javax.swing.JComboBox<String> chooseSecondNode;
     private javax.swing.JLabel fileNameLabel;
+    private javax.swing.JLabel firstNodeWarning;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel mapsPanel;
+    private javax.swing.JLabel secondNodeWarning;
+    private javax.swing.JButton submitButton;
     // End of variables declaration//GEN-END:variables
     
     private void convertFileToGraph()
     {
         int N = fileInput.nextInt();
         this.numOfNodes = N;
-        
         // dummy untuk memindahkan baris
         fileInput.nextLine();
         
@@ -292,11 +412,42 @@ public class App extends javax.swing.JFrame
             JPanel panel = new JPanel(new BorderLayout());
             panel.add(view);
             panel.setSize(1200,800); //gmn cara buat size nya dinamis
-            MapsPanel.add(panel);
-            MapsPanel.revalidate();
-            MapsPanel.repaint();
+            mapsPanel.add(panel);
+            mapsPanel.revalidate();
+            mapsPanel.repaint();
             
             browser.navigation().loadUrl("http://maps.google.com"); 
         });
+    }
+    
+    private void populateFirstNodeChoice()
+    {
+        this.isAddingFirstNode = true;
+        this.chooseFirstNode.removeAllItems();
+        
+        this.chooseFirstNode.addItem(Constants.emptyString);
+        int i = 1;
+        for(Trituple t : this.nodes)
+        {
+            this.chooseFirstNode.addItem(t.name);
+        }
+        this.isAddingFirstNode = false;
+    }
+    
+    private void populateSecondNodeChoice()
+    {
+        this.isAddingSecondNode = true;
+        this.chooseSecondNode.removeAllItems();
+        
+        this.chooseSecondNode.addItem(Constants.emptyString);
+        for(Trituple t : this.nodes)
+        {
+            if(t.name.equals(this.firstNodeChosen))
+            {
+                continue;
+            }
+            this.chooseSecondNode.addItem(t.name);
+        }
+        this.isAddingSecondNode = true;
     }
 }

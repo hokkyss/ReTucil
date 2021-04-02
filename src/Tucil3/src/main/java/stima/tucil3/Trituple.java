@@ -6,15 +6,18 @@
 package stima.tucil3;
 
 public class Trituple {
-    public Double lat;
-    public Double lng;
-    public String name;
+    public final Double lat;
+    public final Double lng;
+    public final String name;
+    public final Integer index;
+    public static int numOfTrituples = 0;
     
     public Trituple()
     {
         this.lat = null;
         this.lng = null;
         this.name = null;
+        this.index = null;
     }
     
     public Trituple(Double lat, Double lng, String name)
@@ -22,11 +25,13 @@ public class Trituple {
         this.lat = lat;
         this.lng = lng;
         this.name = name;
+        this.index = numOfTrituples;
+        numOfTrituples++;
     }
     
     public String toString()
     {
-        String s = "(";
+        String s;
         s = this.name + " = (" + this.lat + ", " + this.lng + ")";
         
         return s;

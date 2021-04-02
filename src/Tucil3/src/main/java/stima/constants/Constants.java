@@ -11,10 +11,13 @@ package stima.constants;
  * @author PERSONAL
  */
 public class Constants {
-    private static String apiKey = "AIzaSyBi9RgHgPabzADyC-RQThD3mi4hCyWLxD4";
+    // TomTom Universal API Key, mungkin ntar untuk javascript aja
+    public static final String apiKey = "RRF5SbdgsyPTbw2a6yRBv1TAv7WTZ3RT";
     
-    public static String getApiKey()
-    {
-        return apiKey;
-    }
+    public static final String emptyString = "";
+    public static final String fileNotFoundMessage = "File not found!";
+    public static final String chooseFileMessage = "Choose your file first!";
+    public static final String canChooseFirstNodeMessage = "Choose your starting point!";
+    public static final String cannotChooseSecondNodeMessage = "Choose your starting point!";
+    public static final String canChooseSecondNodeMessage = "Choose your goal!";
 }
