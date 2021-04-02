@@ -4,9 +4,17 @@
  * and open the template in the editor.
  */
 package stima.tucil3;
+import static com.teamdev.jxbrowser.engine.RenderingMode.HARDWARE_ACCELERATED;
 
+import com.teamdev.jxbrowser.browser.Browser;
+import com.teamdev.jxbrowser.engine.Engine;
+import com.teamdev.jxbrowser.engine.EngineOptions;
+import com.teamdev.jxbrowser.view.swing.BrowserView;
+import java.awt.BorderLayout;
 import java.util.*;
 import java.io.*;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileFilter;
 
@@ -34,6 +42,7 @@ public class App extends javax.swing.JFrame
      */
     public App(){
         initComponents();
+        loadMaps();
         this.inputFile = null;
         this.fileInput = null;
         this.firstNodeChosen = null;
@@ -54,12 +63,9 @@ public class App extends javax.swing.JFrame
 
         browseDialog = new javax.swing.JFileChooser();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        submitButton = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
         browseButton = new javax.swing.JButton();
         fileNameLabel = new javax.swing.JLabel();
+        MapsPanel = new javax.swing.JPanel();
 
         browseDialog.setAcceptAllFileFilterUsed(false);
         browseDialog.setCurrentDirectory(new java.io.File("C:\\Users\\PERSONAL\\Desktop\\KULIAH\\IF2211 STIMA\\Tugas Kecil 3\\test"));
@@ -69,27 +75,6 @@ public class App extends javax.swing.JFrame
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
         jLabel1.setText("Re:Tucil");
-
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-
-        submitButton.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        submitButton.setText("Submit");
-        submitButton.setName("submitButton"); // NOI18N
-        submitButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                submitButtonActionPerformed(evt);
-            }
-        });
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
 
         browseButton.setLabel("Browse");
         browseButton.setName("browseButton"); // NOI18N
@@ -101,6 +86,19 @@ public class App extends javax.swing.JFrame
 
         fileNameLabel.setText("file not found!");
 
+        MapsPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout MapsPanelLayout = new javax.swing.GroupLayout(MapsPanel);
+        MapsPanel.setLayout(MapsPanelLayout);
+        MapsPanelLayout.setHorizontalGroup(
+            MapsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 675, Short.MAX_VALUE)
+        );
+        MapsPanelLayout.setVerticalGroup(
+            MapsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -108,47 +106,27 @@ public class App extends javax.swing.JFrame
             .addGroup(layout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(browseButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(fileNameLabel))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane1)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(44, 44, 44)
-                            .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(333, Short.MAX_VALUE))
+                    .addComponent(fileNameLabel)
+                    .addComponent(browseButton)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(MapsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(submitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(browseButton)
-                    .addComponent(fileNameLabel))
-                .addGap(19, 19, 19)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(202, Short.MAX_VALUE))
+                .addComponent(browseButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(fileNameLabel)
+                .addContainerGap(393, Short.MAX_VALUE))
+            .addComponent(MapsPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        jTextArea1.setText(jTextField1.getText());
-    }//GEN-LAST:event_submitButtonActionPerformed
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseButtonActionPerformed
         try
@@ -207,14 +185,11 @@ public class App extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel MapsPanel;
     private javax.swing.JButton browseButton;
     private javax.swing.JFileChooser browseDialog;
     private javax.swing.JLabel fileNameLabel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JButton submitButton;
     // End of variables declaration//GEN-END:variables
     
     private void convertFileToGraph()
@@ -303,5 +278,25 @@ public class App extends javax.swing.JFrame
         
         /* TODO:
             Implementasikan path yang diambil ke MAP API */
+    }
+    
+    private void loadMaps(){
+        System.setProperty("jxbrowser.license.key", "1BNDHFSC1FYNQ0G0I8NSW5HX5CAC271M98DIQCD0NF84MDN82Z3XELT23S4LRUXFZG51X0");
+        EngineOptions options = EngineOptions.newBuilder(HARDWARE_ACCELERATED).build();
+        Engine engine = Engine.newInstance(options);
+        Browser browser = engine.newBrowser();
+
+        SwingUtilities.invokeLater(() -> {
+            BrowserView view = BrowserView.newInstance(browser);
+            
+            JPanel panel = new JPanel(new BorderLayout());
+            panel.add(view);
+            panel.setSize(1200,800); //gmn cara buat size nya dinamis
+            MapsPanel.add(panel);
+            MapsPanel.revalidate();
+            MapsPanel.repaint();
+            
+            browser.navigation().loadUrl("http://maps.google.com"); 
+        });
     }
 }
