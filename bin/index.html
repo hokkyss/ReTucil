@@ -30,57 +30,6 @@
 
         var markers = [];
 
-        // var geojson = {
-        //     "type": "FeatureCollection",
-        //     "features": [
-        //         {
-        //             "type": "Feature",
-        //             "geometry": {
-        //                 "type": "Point",
-        //                 "coordinates": [
-        //                     107.61045287043389,
-        //                     -6.893213000422173
-        //                 ]
-        //             },
-        //             "properties": {
-        //                 "name" : "ITB"
-        //                 // "iconUrl": ",
-        //                 // "polygonColor": "
-        //             }
-        //         },
-        //         {
-        //             "type": "Feature",
-        //             "geometry": {
-        //                 "type": "Point",
-        //                 "coordinates": [
-        //                     107.6134446812779, 
-        //                     -6.884941990470196
-        //                 ]
-        //             },
-        //             "properties": {
-        //                 "name" : "MCD Dago"
-        //                 // "iconUrl": ",
-        //                 // "polygonColor": 
-        //             }
-        //         },
-        //         {
-        //             "type": "Feature",
-        //             "geometry": {
-        //                 "type": "Point",
-        //                 "coordinates": [
-        //                     107.60909111935575,
-        //                     -6.898651820192955
-        //                 ]
-        //             },
-        //             "properties": {
-        //                 "name" : "Baltos"
-        //                 // "iconUrl": ",
-        //                 // "polygonColor": 
-        //             }
-        //         }
-        //     ]
-        // };
-
         function createMarker(geoJsonPoint) {
             var position = geoJsonPoint.geometry.coordinates;
             const markerElement = document.createElement('div');
@@ -92,9 +41,9 @@
 
         function displayMarkers() {
             var i = 0;
+            
             nodes.forEach(function (marker) {
                 createMarker(marker);
-                console.log(marker.properties.name);
                 var popupOffsets = {
                     top: [0, 0],
                     bottom: [0, -70],
