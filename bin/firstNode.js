@@ -1,0 +1,1 @@
+var firstNode = {lat: -6.891039, lng: 107.609709, name: "DUA"};

@@ -1,0 +1,1 @@
+var secondNode = {lat: -6.891359, lng: 107.611053, name: "TIGA"};

@@ -32,7 +32,12 @@ public class Trituple {
     public String toString()
     {
         String s;
-        s = this.name + " = (" + this.lat + ", " + this.lng + ")";
+        // format js
+        s = "{";
+        s = s + "lat: " + this.lat + ", ";
+        s = s + "lng: " + this.lng + ", ";
+        s = s + "name: " + '"' + this.name + '"';
+        s = s + "}";
         
         return s;
     }

@@ -198,6 +198,7 @@ public class App extends javax.swing.JFrame
             fileInput = new Scanner(inputFile);
             convertFileToGraph();
             populateFirstNodeChoice();
+            printNodesJS();
             
             this.firstNodeWarning.setText(Constants.canChooseFirstNodeMessage);
             this.chooseFirstNode.setEnabled(true);
@@ -221,11 +222,12 @@ public class App extends javax.swing.JFrame
 
     private void chooseSecondNodeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chooseSecondNodeItemStateChanged
         if(this.isAddingSecondNode) return;
+        
         this.secondNodeChosen = this.chooseSecondNode.getSelectedItem().toString();
-
         if(this.secondNodeChosen.equals(Constants.emptyString))
         {
             this.secondNodeChosen = null;
+            this.secondNodeIndex = null;
             return;
         }
         
@@ -237,6 +239,7 @@ public class App extends javax.swing.JFrame
                 break;
             }
         }
+        printSecondNodeJS();
     }//GEN-LAST:event_chooseSecondNodeItemStateChanged
 
     private void chooseFirstNodeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chooseFirstNodeItemStateChanged
@@ -246,6 +249,7 @@ public class App extends javax.swing.JFrame
         if(this.firstNodeChosen.equals(Constants.emptyString))
         {
             this.firstNodeChosen = null;
+            this.firstNodeIndex = null;
             secondNodeWarning.setText(Constants.cannotChooseSecondNodeMessage);
             chooseSecondNode.setSelectedItem(Constants.emptyString);
             chooseSecondNode.setEnabled(false);
@@ -260,14 +264,13 @@ public class App extends javax.swing.JFrame
                 break;
             }
         }
+        
+        printFirstNodeJS();
         populateSecondNodeChoice();
         this.secondNodeWarning.setText(Constants.canChooseSecondNodeMessage);
         this.chooseSecondNode.setEnabled(true);
     }//GEN-LAST:event_chooseFirstNodeItemStateChanged
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -448,6 +451,72 @@ public class App extends javax.swing.JFrame
             }
             this.chooseSecondNode.addItem(t.name);
         }
-        this.isAddingSecondNode = true;
+        this.isAddingSecondNode = false;
+    }
+    
+    private void printNodesJS()
+    {
+        try
+        {
+            FileWriter file = new FileWriter("./../../bin/nodes.js");
+            file.write("var nodes = [");
+            for(Trituple t : this.nodes)
+            {
+                file.write(t.toString());
+                file.write(", ");
+            }
+            file.write("];");
+            file.close();
+        }
+        catch (IOException e)
+        {
+            // do nothing
+        }
+    }
+    
+    private void printFirstNodeJS()
+    {
+        try
+        {
+            FileWriter file = new FileWriter("./../../bin/firstNode.js");
+            file.write("var firstNode = ");
+            if(this.firstNodeIndex == null)
+            {
+                file.write("{}");
+            }
+            else
+            {
+                file.write(nodes.get(firstNodeIndex).toString());
+            }
+            file.write(";");
+            file.close();
+        }
+        catch (IOException e)
+        {
+            // do nothing
+        }
+    }
+    
+    private void printSecondNodeJS()
+    {
+        try
+        {
+            FileWriter file = new FileWriter("./../../bin/secondNode.js");
+            file.write("var secondNode = ");
+            if(this.secondNodeIndex == null)
+            {
+                file.write("{}");
+            }
+            else
+            {
+                file.write(nodes.get(secondNodeIndex).toString());
+            }
+            file.write(";");
+            file.close();
+        }
+        catch (IOException e)
+        {
+            // do nothing
+        }
     }
 }
