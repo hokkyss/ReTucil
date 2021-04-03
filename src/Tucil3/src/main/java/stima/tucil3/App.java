@@ -49,7 +49,6 @@ public class App extends javax.swing.JFrame
      */
     public App(){
         initComponents();
-        loadMaps();
         this.inputFile = null;
         this.fileInput = null;
         this.firstNodeChosen = null;
@@ -194,7 +193,7 @@ public class App extends javax.swing.JFrame
 
     private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseButtonActionPerformed
         try
-        {    
+        {   
             FileFilter filter = new FileNameExtensionFilter("Text files", "txt");
             this.browseDialog.setFileFilter(filter);
             this.browseDialog.showOpenDialog(this);
@@ -213,6 +212,8 @@ public class App extends javax.swing.JFrame
             
             this.browseButton.setText("Change");
             fileNameLabel.setText(inputFile.getName());
+            
+            loadMaps();
         }
         catch (Exception e)
         {
