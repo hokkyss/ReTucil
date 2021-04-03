@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html class='use-all-space'>
+<head>
+    <meta http-equiv='X-UA-Compatible' content='IE=Edge' />
+    <meta charset='UTF-8'>
+    <title>Demo app</title>
+    <meta name='viewport'
+          content='width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no'/>
+    <link rel='stylesheet' type='text/css' href='https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.12.0/maps/maps.css'>
+    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.12.0/maps/maps-web.min.js"></script>
+    <style>
+        #map {
+            width: 99vw;
+            height: 90vh;
+        }
+    </style>
+</head>
+<body>
+    <div id='map' class='map'></div>
+    <script>
+        var map = tt.map({
+            key: 'acQGRYXqzbi6iQAwiRBAFoqGRXPznjE5',
+            container: 'map',
+            center: [107.61045287043389, -6.893213000422173],
+            zoom: 15
+        });
+
+        var markers = [];
+
+        var geojson = {
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            107.61045287043389,
+                            -6.893213000422173
+                        ]
+                    },
+                    "properties": {
+                        // "iconUrl": ",
+                        // "polygonColor": "
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            107.6134446812779, 
+                            -6.884941990470196
+                        ]
+                    },
+                    "properties": {
+                        // "iconUrl": ",
+                        // "polygonColor": 
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            107.60909111935575,
+                            -6.898651820192955
+                        ]
+                    },
+                    "properties": {
+                        // "iconUrl": ",
+                        // "polygonColor": 
+                    }
+                }
+            ]
+        };
+
+        function createMarker(geoJsonPoint) {
+            var position = geoJsonPoint.geometry.coordinates;
+            const markerElement = document.createElement('div');
+            markerElement.innerHTML = "";
+            marker = new tt.Marker().setLngLat(position).addTo(map);
+            markers.push(marker);
+            return marker;
+        }
+
+        function displayMarkers() {
+            geojson.features.forEach(function (marker) {
+                createMarker(marker);
+            });
+        }
+        
+        displayMarkers();
+        // map.on('load', function() {
+      
+        // });
+
+    </script>
+</body>
+</html>
