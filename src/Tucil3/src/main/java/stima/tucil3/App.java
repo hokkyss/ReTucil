@@ -140,6 +140,11 @@ public class App extends javax.swing.JFrame
         });
 
         submitButton.setText("Submit");
+        submitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -270,6 +275,10 @@ public class App extends javax.swing.JFrame
         this.secondNodeWarning.setText(Constants.canChooseSecondNodeMessage);
         this.chooseSecondNode.setEnabled(true);
     }//GEN-LAST:event_chooseFirstNodeItemStateChanged
+
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+        if(this.firstNodeIndex == null || this.secondNodeIndex == null) return;
+    }//GEN-LAST:event_submitButtonActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

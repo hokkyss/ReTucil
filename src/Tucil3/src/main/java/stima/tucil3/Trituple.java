@@ -5,6 +5,8 @@
  */
 package stima.tucil3;
 
+import stima.constants.Constants;
+
 public class Trituple {
     public final Double lat;
     public final Double lng;
@@ -42,8 +44,18 @@ public class Trituple {
         return s;
     }
     
+    // dihitung menggunakan Haversine Formula
     public Double straightLineDistance(Trituple other)
     {
-        return Math.sqrt(Math.pow(other.lat - this.lat, 2) + Math.pow(other.lng - this.lng, 2));
+        double pi1 = this.lat * Math.PI/180;
+        double pi2 = other.lat * Math.PI/180;
+        
+        double deltaPi = (this.lat - other.lat) * Math.PI/180;
+        double deltaLambda = (this.lng - other.lng) * Math.PI/180;
+        
+        double a = Math.pow(Math.sin(deltaLambda / 2), 2) + (Math.cos(pi1) * Math.cos(pi2) * Math.pow(Math.sin(deltaLambda), 2));
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        
+        return Constants.earthRadiusInMeter * c;
     }
 }
