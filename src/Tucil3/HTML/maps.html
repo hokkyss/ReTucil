@@ -21,7 +21,7 @@
         var map = tt.map({
             key: 'acQGRYXqzbi6iQAwiRBAFoqGRXPznjE5',
             container: 'map',
-            center: [107.61045287043389, -6.893213000422173],
+            center: [107.61054761543446, -6.89148341107583],
             zoom: 15
         });
 
@@ -40,6 +40,7 @@
                         ]
                     },
                     "properties": {
+                        "name" : "ITB"
                         // "iconUrl": ",
                         // "polygonColor": "
                     }
@@ -54,6 +55,7 @@
                         ]
                     },
                     "properties": {
+                        "name" : "MCD Dago"
                         // "iconUrl": ",
                         // "polygonColor": 
                     }
@@ -68,6 +70,7 @@
                         ]
                     },
                     "properties": {
+                        "name" : "Baltos"
                         // "iconUrl": ",
                         // "polygonColor": 
                     }
@@ -85,8 +88,21 @@
         }
 
         function displayMarkers() {
+            var i = 0;
             geojson.features.forEach(function (marker) {
                 createMarker(marker);
+                console.log(marker.properties.name);
+                var popupOffsets = {
+                    top: [0, 0],
+                    bottom: [0, -70],
+                    'bottom-right': [0, -70],
+                    'bottom-left': [0, -70],
+                    left: [25, -35],
+                    right: [-25, -35]
+                }
+                var popup = new tt.Popup({offset: popupOffsets}).setHTML(marker.properties.name);
+                markers[i].setPopup(popup).togglePopup();
+                i++;
             });
         }
         
