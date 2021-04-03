@@ -35,12 +35,25 @@ public class Trituple {
     {
         String s;
         // format js
+        /* VERSI SATU
         s = "{";
         s = s + "lat: " + this.lat + ", ";
         s = s + "lng: " + this.lng + ", ";
         s = s + "name: " + '"' + this.name + '"';
-        s = s + "}";
+        s = s + "}"; */
         
+        s =     "{";
+        s = s +     "type: \"Feature\", ";
+        s = s +     "geometry: {";
+        s = s +         "type: \"Point\", ";
+        s = s +         "coordinates: [";
+        s = s +             this.lng + ", " + this.lat;
+        s = s +         "]";
+        s = s +     "},";
+        s = s +     "properties:{";
+        s = s +         "name: " + '"' + this.name + '"';
+        s = s +     "}";
+        s = s + "}";
         return s;
     }
     

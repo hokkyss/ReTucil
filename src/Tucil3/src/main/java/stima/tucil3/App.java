@@ -47,9 +47,11 @@ public class App extends javax.swing.JFrame
     /**
      * Creates new form App
      */
+    
+    private ArrayList<Integer> path;
+    
     public App(){
         initComponents();
-        loadMaps();
         this.inputFile = null;
         this.fileInput = null;
         this.firstNodeChosen = null;
@@ -194,7 +196,7 @@ public class App extends javax.swing.JFrame
 
     private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseButtonActionPerformed
         try
-        {    
+        {   
             FileFilter filter = new FileNameExtensionFilter("Text files", "txt");
             this.browseDialog.setFileFilter(filter);
             this.browseDialog.showOpenDialog(this);
@@ -213,6 +215,8 @@ public class App extends javax.swing.JFrame
             
             this.browseButton.setText("Change");
             fileNameLabel.setText(inputFile.getName());
+            
+            loadMaps();
         }
         catch (Exception e)
         {
@@ -249,7 +253,7 @@ public class App extends javax.swing.JFrame
 
     private void chooseFirstNodeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chooseFirstNodeItemStateChanged
         if(this.isAddingFirstNode) return;
-
+        
         this.firstNodeChosen = this.chooseFirstNode.getSelectedItem().toString();
         if(this.firstNodeChosen.equals(Constants.emptyString))
         {
@@ -278,6 +282,11 @@ public class App extends javax.swing.JFrame
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         if(this.firstNodeIndex == null || this.secondNodeIndex == null) return;
+        
+        this.path = new ArrayList<>();
+        AStarAlgorithm();
+        
+        printPathJS();
     }//GEN-LAST:event_submitButtonActionPerformed
 
     public static void main(String args[]) {
@@ -357,7 +366,7 @@ public class App extends javax.swing.JFrame
     
     private void AStarAlgorithm()
     {
-        PriorityQueue<PriorityQueueEntry> queue = new PriorityQueue<>();
+        PriorityQueue<PriorityQueueEntry> queue = new PriorityQueue<>(new PriorityQueueEntryComparator());
         boolean[] visited = new boolean[numOfNodes];
         
         queue.add(new PriorityQueueEntry(0, 0, firstNodeIndex, new ArrayList<>()));
@@ -378,10 +387,14 @@ public class App extends javax.swing.JFrame
             
             if(visited[currentNodeIndex]) continue;
             
-            if(currentNodeIndex == secondNodeIndex) break;
+            if(currentNodeIndex == secondNodeIndex)
+            {
+                paths.add(currentNodeIndex);
+                break;
+            }
             
             visited[currentNodeIndex] = true;
-            for(int i = 0; i <= numOfNodes; i++)
+            for(int i = 0; i < numOfNodes; i++)
             {
                 if(i == currentNodeIndex) continue;
                 
@@ -407,9 +420,10 @@ public class App extends javax.swing.JFrame
             return;
         }
         // sudah pasti sampai tujuan
-        
-        /* TODO:
-            Implementasikan path yang diambil ke MAP API */
+        for(Integer i : paths)
+        {
+            this.path.add(i);
+        }
     }
     
     private void loadMaps(){
@@ -523,6 +537,26 @@ public class App extends javax.swing.JFrame
                 file.write(nodes.get(secondNodeIndex).toString());
             }
             file.write(";");
+            file.close();
+        }
+        catch (IOException e)
+        {
+            // do nothing
+        }
+    }
+    
+    private void printPathJS()
+    {
+        try
+        {
+            FileWriter file = new FileWriter("./../../bin/path.js");
+            file.write("var path = [");
+            for(Integer i : this.path)
+            {
+                file.write(this.nodes.get(i).toString());
+                file.write(", ");
+            }
+            file.write("];");
             file.close();
         }
         catch (IOException e)

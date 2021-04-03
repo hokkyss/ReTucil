@@ -24,8 +24,8 @@ public class PriorityQueueEntry {
         this.path = path;
     }
     
-    public int compareTo(PriorityQueueEntry other)
+    public int compare(PriorityQueueEntry other)
     {
-        return -1 * this.sum.compareTo(other.sum);
+        return this.sum.compareTo(other.sum);
     }
 }
