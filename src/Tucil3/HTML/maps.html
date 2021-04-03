@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html class='use-all-space'>
+<head>
+    <meta http-equiv='X-UA-Compatible' content='IE=Edge' />
+    <meta charset='UTF-8'>
+    <title>Demo app</title>
+    <meta name='viewport'
+          content='width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no'/>
+    <link rel='stylesheet' type='text/css' href='https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.12.0/maps/maps.css'>
+    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.12.0/maps/maps-web.min.js"></script>
+    <style>
+        #map {
+            width: 90vw;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <div id='map' class='map'></div>
+    <script>
+        var map = tt.map({
+            key: 'acQGRYXqzbi6iQAwiRBAFoqGRXPznjE5',
+            container: 'map',
+            center: [107.61120364205213, -6.8906832629241865],
+            zoom: 15
+        });
+
+        // map.on('load', function() {
+        //     map.showTrafficFlow();
+        // });
+    </script>
+</body>
+</html>
