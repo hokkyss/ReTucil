@@ -443,7 +443,8 @@ public class App extends javax.swing.JFrame
             mapsPanel.repaint();
             
             /* Sesuaikan letak file HTML nya */
-            browser.navigation().loadUrl("./../../bin/index.html"); 
+//            browser.navigation().loadUrl("C:\\Users\\chris\\Desktop\\tucil\\IF2211_Tucil3\\src\\Tucil3\\HTML\\maps.html"); 
+            browser.navigation().loadUrl("http://localhost:8000"); 
         });
     }
     
