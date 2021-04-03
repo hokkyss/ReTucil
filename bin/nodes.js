@@ -1,1 +1,1 @@
-var nodes = [{lat: -6.891927, lng: 107.610395, name: "SATU"}, {lat: -6.891039, lng: 107.609709, name: "DUA"}, {lat: -6.891359, lng: 107.611053, name: "TIGA"}, ];
+var nodes = [{type: "Feature", geometry: {type: "Point", coordinates: [107.610395, -6.891927], properties:{}}}, {type: "Feature", geometry: {type: "Point", coordinates: [107.609709, -6.891039], properties:{}}}, {type: "Feature", geometry: {type: "Point", coordinates: [107.611053, -6.891359], properties:{}}}, ];

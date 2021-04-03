@@ -11,7 +11,6 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel='stylesheet' type='text/css' href='https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.12.0/maps/maps.css'>
         <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.12.0/maps/maps-web.min.js"></script>
-        <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.12.0/maps/maps-web.min.js"></script>
         <script src ="nodes.js"></script>
         <script src ="firstNode.js"></script>
         <script src ="secondNode.js"></script>
@@ -20,13 +19,12 @@ and open the template in the editor.
     <body>
         <div id="map"></div>
         <script>
-            const apiKey = "RRF5SbdgsyPTbw2a6yRBv1TAv7WTZ3RT"
+            const apiKey = "RRF5SbdgsyPTbw2a6yRBv1TAv7WTZ3RT";
             var map = tt.map({
                 key: apiKey,
                 container: 'map',
-                style: 'tomtom://vector/1/basic-main'
             });
         </script>
-        <script src="map.js"></script>
+        <script type="module" src="map.js"></script>
     </body>
 </html>

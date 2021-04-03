@@ -1,1 +1,1 @@
-var secondNode = {lat: -6.891359, lng: 107.611053, name: "TIGA"};
+var secondNode = {type: "Feature", geometry: {type: "Point", coordinates: [107.610395, -6.891927], properties:{}}};
