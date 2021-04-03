@@ -428,7 +428,8 @@ public class App extends javax.swing.JFrame
             mapsPanel.revalidate();
             mapsPanel.repaint();
             
-            browser.navigation().loadUrl("http://maps.google.com"); 
+            /* Sesuaikan letak file HTML nya */
+            browser.navigation().loadUrl("C:\\Users\\chris\\Desktop\\tucil\\IF2211_Tucil3\\src\\Tucil3\\HTML\\maps.html"); 
         });
     }
     
