@@ -1,1 +1,1 @@
-var secondNode = {type: "Feature", geometry: {type: "Point", coordinates: [107.609709, -6.891039]},properties:{name: "DUA"}};
+var secondNode = {type: "Feature", geometry: {type: "Point", coordinates: [107.611572, -6.8899]},properties:{name: "LIMA"}};
