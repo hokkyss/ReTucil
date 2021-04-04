@@ -229,6 +229,7 @@ public class App extends javax.swing.JFrame
         AStarAlgorithm();
 
         printPathJS();
+        
     }//GEN-LAST:event_submitButtonActionPerformed
 
     private void chooseSecondNodeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chooseSecondNodeItemStateChanged
@@ -276,6 +277,7 @@ public class App extends javax.swing.JFrame
             fileNameLabel.setText(inputFile.getName());
 
             loadMaps();
+            printGraph();
         }
         catch (Exception e)
         {
@@ -487,7 +489,7 @@ public class App extends javax.swing.JFrame
             mapsPanel.repaint();
             
             /* Sesuaikan letak file HTML nya */
-//            browser.navigation().loadUrl("C:\\Users\\chris\\Desktop\\tucil\\IF2211_Tucil3\\src\\Tucil3\\HTML\\maps.html"); 
+//            browser.navigation().loadUrl("C:\\Users\\chris\\Desktop\\tucil\\IF2211_Tucil3\\bin\\index.html"); 
             browser.navigation().loadUrl("http://localhost:8000"); 
         });
     }
@@ -604,6 +606,31 @@ public class App extends javax.swing.JFrame
             file.close();
         }
         catch (IOException e)
+        {
+            // do nothing
+        }
+    }
+    
+    private void printGraph()
+    {
+        try{
+            FileWriter file = new FileWriter("./../../bin/graph.js");
+            file.write("var graph = [");
+            for(int i = 0; i < numOfNodes; i++){
+                for(int j = i+1; j < numOfNodes; j++){
+                    if(adjacencyMatrix[i][j] != 0){
+                        file.write("[");
+                        file.write(this.nodes.get(i).toString());
+                        file.write(", ");
+                        file.write(this.nodes.get(j).toString());
+                        file.write("], ");
+                    }
+                }
+            }
+            file.write("];");
+            file.close();
+        }
+        catch(IOException e)
         {
             // do nothing
         }
