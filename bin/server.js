@@ -20,3 +20,7 @@ app.listen(8000);
 app.get('/', function (req, res) {
     res.render('pages/index');
 });
+
+app.get('/about', function (req, res) {
+    res.render('pages/about');
+});
