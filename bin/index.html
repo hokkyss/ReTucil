@@ -9,6 +9,8 @@
     <link rel='stylesheet' type='text/css' href='https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.12.0/maps/maps.css'>
     <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.12.0/maps/maps-web.min.js"></script>
     <script src ="nodes.js"></script>
+    <script src ="graph.js"></script>
+    <script src ="path.js"></script>
     <script src ="firstNode.js"></script>
     <script src ="secondNode.js"></script>
     <style>
@@ -19,6 +21,7 @@
     </style>
 </head>
 <body>
+    <button onclick=createPath()>Show Path</button>
     <div id='map' class='map'></div>
     <script>
         var map = tt.map({
@@ -59,9 +62,56 @@
         }
         
         displayMarkers();
-        // map.on('load', function() {
-      
-        // });
+
+        map.on('load', function() {
+            graph.forEach(function (line, index) {
+                map.addLayer({
+                    'id' : 'route' + index,
+                    'type' : 'line',
+                    'source' : {
+                        'type' : 'geojson',
+                        'data': {
+                            'type': 'Feature',
+                            'geometry': {
+                                'type': 'LineString',
+                                'coordinates': 
+                                    [line[0].geometry.coordinates,
+                                    line[1].geometry.coordinates]
+                            }
+                        }
+                    },
+                    'paint' : {
+                        'line-color' : 'red',
+                        'line-width' : 5
+                    } 
+                })
+            })
+        });
+
+        var createPath = function(){
+            var pathLine = [];
+            path.forEach(function (node) {
+                pathLine.push(node.geometry.coordinates);
+            })
+            map.addLayer({
+                'id' : 'path',
+                'type' : 'line',
+                'source' : {
+                    'type' : 'geojson',
+                    'data': {
+                        'type': 'Feature',
+                        'geometry': {
+                            'type': 'LineString',
+                            'coordinates': pathLine
+                        }
+                    }
+                },
+                'paint' : {
+                    'line-color' : 'green',
+                    'line-width' : 5
+                } 
+            });
+        }
 
     </script>
 </body>
