@@ -68,6 +68,7 @@ public class App extends javax.swing.JFrame
         this.path = new ArrayList<>();
         this.numOfNodes = 0;
         this.numOfEdges = 0;
+        this.panel = new JPanel(new BorderLayout());
     }
 
     /**
@@ -82,7 +83,7 @@ public class App extends javax.swing.JFrame
         browseDialog = new javax.swing.JFileChooser();
         mapsPanel = new javax.swing.JPanel();
         parent = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        ReTucil = new javax.swing.JLabel();
         chooseFirstNode = new javax.swing.JComboBox<>();
         firstNodeWarning = new javax.swing.JLabel();
         fileNameLabel = new javax.swing.JLabel();
@@ -111,20 +112,20 @@ public class App extends javax.swing.JFrame
         mapsPanel.setLayout(mapsPanelLayout);
         mapsPanelLayout.setHorizontalGroup(
             mapsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 506, Short.MAX_VALUE)
+            .addGap(0, 500, Short.MAX_VALUE)
         );
         mapsPanelLayout.setVerticalGroup(
             mapsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 551, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        parent.setBackground(new java.awt.Color(0, 0, 0));
+        parent.setBackground(new java.awt.Color(0, 137, 190));
         parent.setPreferredSize(new java.awt.Dimension(216, 548));
 
-        jLabel1.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Re:Tucil");
+        ReTucil.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
+        ReTucil.setForeground(new java.awt.Color(255, 255, 255));
+        ReTucil.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ReTucil.setText("Re:Tucil");
 
         chooseFirstNode.setAutoscrolls(true);
         chooseFirstNode.setEnabled(false);
@@ -184,7 +185,7 @@ public class App extends javax.swing.JFrame
                 .addGroup(parentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(secondNodeWarning, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(firstNodeWarning, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                    .addComponent(ReTucil, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
                     .addComponent(fileNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(browseButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(chooseFirstNode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -196,12 +197,12 @@ public class App extends javax.swing.JFrame
             parentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, parentLayout.createSequentialGroup()
                 .addGap(45, 45, 45)
-                .addComponent(jLabel1)
+                .addComponent(ReTucil)
                 .addGap(43, 43, 43)
                 .addComponent(fileNameLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(browseButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
                 .addComponent(firstNodeWarning)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(chooseFirstNode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -220,13 +221,13 @@ public class App extends javax.swing.JFrame
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(parent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(mapsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mapsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(parent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(mapsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(parent, javax.swing.GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
+            .addComponent(mapsPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -347,9 +348,9 @@ public class App extends javax.swing.JFrame
         
         this.appSize = this.getSize();
         
-        this.mapsPanel.setSize((int)(appSize.width * Constants.mapsPanelRatio), appSize.height);
+        this.mapsPanel.setSize(appSize.width - this.parent.getWidth(), appSize.height);
         
-        this.panel.setSize(this.mapsPanel.getWidth(), (int)(this.mapsPanel.getHeight() * (1 + Constants.innerMapsPanelRatio)));
+        this.panel.setSize(this.mapsPanel.getWidth(), this.mapsPanel.getHeight());
         mapsPanel.add(panel);
         mapsPanel.revalidate();
         mapsPanel.repaint();
@@ -388,13 +389,13 @@ public class App extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel ReTucil;
     private javax.swing.JButton browseButton;
     private javax.swing.JFileChooser browseDialog;
     private javax.swing.JComboBox<String> chooseFirstNode;
     private javax.swing.JComboBox<String> chooseSecondNode;
     private javax.swing.JLabel fileNameLabel;
     private javax.swing.JLabel firstNodeWarning;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel mapsPanel;
     private javax.swing.JPanel parent;
     private javax.swing.JLabel secondNodeWarning;
@@ -508,7 +509,6 @@ public class App extends javax.swing.JFrame
         SwingUtilities.invokeLater(() -> {
             BrowserView view = BrowserView.newInstance(browser);
             
-            panel = new JPanel(new BorderLayout());
             panel.add(view);
             panel.setSize(this.mapsPanel.getSize());
             // 675 x 518
