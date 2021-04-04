@@ -240,7 +240,15 @@ public class App extends javax.swing.JFrame
         AStarAlgorithm();
 
         printPathJS();
-        
+        System.out.println(this.path);
+        for(int i = 0; i < this.numOfNodes; i++)
+        {
+            for(int j = 0; j < this.numOfNodes; j++)
+            {
+                System.out.print(this.adjacencyMatrix[i][j] + " ");
+            }
+            System.out.println();
+        }
     }//GEN-LAST:event_submitButtonActionPerformed
 
     private void chooseSecondNodeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chooseSecondNodeItemStateChanged
@@ -471,6 +479,7 @@ public class App extends javax.swing.JFrame
             for(int i = 0; i < numOfNodes; i++)
             {
                 if(i == currentNodeIndex) continue;
+                if(this.adjacencyMatrix[currentNodeIndex][i] == 0.0) continue;
                 
                 Double nextDistance = currentDistance + adjacencyMatrix[currentNodeIndex][i];
                 Double nextEstimatedDistance = currentDistance + nodes.get(i).straightLineDistance(nodes.get(currentNodeIndex));
