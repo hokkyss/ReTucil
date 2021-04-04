@@ -286,6 +286,7 @@ public class App extends javax.swing.JFrame
             this.chooseFirstNode.setEnabled(true);
 
             this.secondNodeWarning.setText(Constants.cannotChooseSecondNodeMessage);
+            this.chooseSecondNode.setSelectedItem(Constants.emptyString);
             this.chooseSecondNode.setEnabled(false);
 
             this.browseButton.setText("Change");
