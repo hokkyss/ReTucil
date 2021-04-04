@@ -96,6 +96,7 @@ public class App extends javax.swing.JFrame
         browseDialog.setName("browseDialog"); // NOI18N
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(722, 551));
         addWindowStateListener(new java.awt.event.WindowStateListener() {
             public void windowStateChanged(java.awt.event.WindowEvent evt) {
                 formWindowStateChanged(evt);
@@ -104,19 +105,24 @@ public class App extends javax.swing.JFrame
 
         mapsPanel.setAlignmentX(0.0F);
         mapsPanel.setAlignmentY(0.0F);
+        mapsPanel.setPreferredSize(new java.awt.Dimension(506, 551));
 
         javax.swing.GroupLayout mapsPanelLayout = new javax.swing.GroupLayout(mapsPanel);
         mapsPanel.setLayout(mapsPanelLayout);
         mapsPanelLayout.setHorizontalGroup(
             mapsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 569, Short.MAX_VALUE)
+            .addGap(0, 506, Short.MAX_VALUE)
         );
         mapsPanelLayout.setVerticalGroup(
             mapsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 551, Short.MAX_VALUE)
         );
 
+        parent.setBackground(new java.awt.Color(0, 0, 0));
+        parent.setPreferredSize(new java.awt.Dimension(216, 548));
+
         jLabel1.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Re:Tucil");
 
@@ -130,9 +136,12 @@ public class App extends javax.swing.JFrame
         });
 
         firstNodeWarning.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        firstNodeWarning.setForeground(new java.awt.Color(255, 255, 255));
         firstNodeWarning.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         firstNodeWarning.setText(Constants.chooseFileMessage);
 
+        fileNameLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        fileNameLabel.setForeground(new java.awt.Color(255, 255, 255));
         fileNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         fileNameLabel.setText("File not found!");
 
@@ -155,6 +164,7 @@ public class App extends javax.swing.JFrame
         });
 
         secondNodeWarning.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        secondNodeWarning.setForeground(new java.awt.Color(255, 255, 255));
         secondNodeWarning.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         secondNodeWarning.setText(Constants.chooseFileMessage);
 
@@ -174,15 +184,12 @@ public class App extends javax.swing.JFrame
                 .addGroup(parentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(secondNodeWarning, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(firstNodeWarning, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(parentLayout.createSequentialGroup()
-                        .addGroup(parentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(submitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(chooseFirstNode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(chooseSecondNode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(fileNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-                            .addComponent(browseButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                    .addComponent(fileNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(browseButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(chooseFirstNode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(chooseSecondNode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(submitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         parentLayout.setVerticalGroup(
@@ -213,8 +220,8 @@ public class App extends javax.swing.JFrame
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(parent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(mapsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(mapsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
