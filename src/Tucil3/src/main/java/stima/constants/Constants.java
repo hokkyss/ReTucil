@@ -15,7 +15,7 @@ public class Constants {
     public static final String apiKey = "RRF5SbdgsyPTbw2a6yRBv1TAv7WTZ3RT";
     
     public static final Double mapsPanelRatio = 0.7;
-    public static final Long earthRadiusInMeter = (long)6371000;
+    public static final double earthRadiusInMeter = 6371000.0;
     public static final String emptyString = "";
     public static final String fileNotFoundMessage = "File not found!";
     public static final String chooseFileMessage = "Choose your file first!";
