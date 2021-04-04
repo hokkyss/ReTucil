@@ -56,6 +56,7 @@ public class App extends javax.swing.JFrame
     
     public App(){
         initComponents();
+        loadMaps();
         this.inputFile = null;
         this.fileInput = null;
         this.firstNodeChosen = null;
@@ -276,7 +277,7 @@ public class App extends javax.swing.JFrame
             this.browseButton.setText("Change");
             fileNameLabel.setText(inputFile.getName());
 
-            loadMaps();
+//            loadMaps();
             printGraph();
         }
         catch (Exception e)
@@ -529,7 +530,7 @@ public class App extends javax.swing.JFrame
     {
         try
         {
-            FileWriter file = new FileWriter("./../../bin/nodes.js");
+            FileWriter file = new FileWriter("./../../bin/public/nodes.js");
             file.write("var nodes = [");
             for(Trituple t : this.nodes)
             {
@@ -549,7 +550,7 @@ public class App extends javax.swing.JFrame
     {
         try
         {
-            FileWriter file = new FileWriter("./../../bin/firstNode.js");
+            FileWriter file = new FileWriter("./../../bin/public/firstNode.js");
             file.write("var firstNode = ");
             if(this.firstNodeIndex == null)
             {
@@ -572,7 +573,7 @@ public class App extends javax.swing.JFrame
     {
         try
         {
-            FileWriter file = new FileWriter("./../../bin/secondNode.js");
+            FileWriter file = new FileWriter("./../../bin/public/secondNode.js");
             file.write("var secondNode = ");
             if(this.secondNodeIndex == null)
             {
@@ -595,7 +596,7 @@ public class App extends javax.swing.JFrame
     {
         try
         {
-            FileWriter file = new FileWriter("./../../bin/path.js");
+            FileWriter file = new FileWriter("./../../bin/public/path.js");
             file.write("var path = [");
             for(Integer i : this.path)
             {
@@ -614,7 +615,7 @@ public class App extends javax.swing.JFrame
     private void printGraph()
     {
         try{
-            FileWriter file = new FileWriter("./../../bin/graph.js");
+            FileWriter file = new FileWriter("./../../bin/public/graph.js");
             file.write("var graph = [");
             for(int i = 0; i < numOfNodes; i++){
                 for(int j = i+1; j < numOfNodes; j++){

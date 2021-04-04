@@ -9,6 +9,7 @@
     <link rel='stylesheet' type='text/css' href='https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.12.0/maps/maps.css'>
     <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.12.0/maps/maps-web.min.js"></script>
     <script src ="nodes.js"></script>
+    <script src ="index.js"></script>
     <script src ="graph.js"></script>
     <script src ="path.js"></script>
     <script src ="firstNode.js"></script>
@@ -21,7 +22,12 @@
     </style>
 </head>
 <body>
-    <button onclick=createPath()>Show Path</button>
+    <div>
+        <form method="get" action="/">
+            <button type="submit">Reload</button>
+        </form>
+        <button onclick=createPath()>Show Path</button>
+    </div>
     <div id='map' class='map'></div>
     <script>
         var map = tt.map({
@@ -88,7 +94,7 @@
             })
         });
 
-        var createPath = function(){
+        function createPath(){
             var pathLine = [];
             path.forEach(function (node) {
                 pathLine.push(node.geometry.coordinates);
@@ -111,6 +117,10 @@
                     'line-width' : 5
                 } 
             });
+        }
+
+        function clearPath(){
+
         }
 
     </script>

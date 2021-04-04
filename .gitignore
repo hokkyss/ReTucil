@@ -29,3 +29,5 @@ hs_err_pid*
 *.vscode
 *.vs
 /src/Tucil3/target/
+
+node_modules
