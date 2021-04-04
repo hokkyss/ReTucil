@@ -40,9 +40,11 @@
                         <button class="btn btn-secondary btn-outline-secondary" type="submit" style="margin-left: 10px; margin-right: 10px">Maps</button>
                     </form>
                 </li>
+                <% if (page_name === 'index') {  %>
                 <li class="nav-item">
                     <button type="button" class="btn btn-secondary btn-outline-secondary" onclick=createPath() style="margin-left: 10px; margin-right: 10px">Show Path</button>
                 </li>
+                <% } %>
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">

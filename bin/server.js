@@ -18,9 +18,15 @@ app.listen(8000);
 
 // Root Route
 app.get('/', function (req, res) {
-    res.render('pages/index');
+    var page_name = 'index'
+    res.render('pages/index', {
+        page_name : page_name
+    });
 });
 
 app.get('/about', function (req, res) {
-    res.render('pages/about');
+    var page_name = 'about'
+    res.render('pages/about', {
+        page_name : page_name
+    });
 });

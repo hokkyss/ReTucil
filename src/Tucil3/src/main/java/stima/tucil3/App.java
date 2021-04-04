@@ -442,6 +442,7 @@ public class App extends javax.swing.JFrame
             for(int i = 0; i < numOfNodes; i++)
             {
                 if(i == currentNodeIndex) continue;
+                if(this.adjacencyMatrix[currentNodeIndex][i] == 0.0) continue;
                 
                 Double nextDistance = currentDistance + adjacencyMatrix[currentNodeIndex][i];
                 Double nextEstimatedDistance = currentDistance + nodes.get(i).straightLineDistance(nodes.get(currentNodeIndex));
