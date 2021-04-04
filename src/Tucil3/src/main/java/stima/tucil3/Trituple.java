@@ -43,15 +43,15 @@ public class Trituple {
         s = s + "}"; */
         
         s =     "{";
-        s = s +     "type: \"Feature\", ";
-        s = s +     "geometry: {";
-        s = s +         "type: \"Point\", ";
-        s = s +         "coordinates: [";
+        s = s +     "\"type\": \"Feature\", ";
+        s = s +     "\"geometry\": {";
+        s = s +         "\"type\": \"Point\", ";
+        s = s +         "\"coordinates\": [";
         s = s +             this.lng + ", " + this.lat;
         s = s +         "]";
-        s = s +     "},";
-        s = s +     "properties:{";
-        s = s +         "name: " + '"' + this.name + '"';
+        s = s +     "}, ";
+        s = s +     "\"properties\": {";
+        s = s +         "\"name\": " + '"' + this.name + '"';
         s = s +     "}";
         s = s + "}";
         return s;

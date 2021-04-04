@@ -39,15 +39,16 @@ public class App extends javax.swing.JFrame
     // user's choice
     private boolean isAddingFirstNode;
     private String firstNodeChosen;
-    private Integer firstNodeIndex;
+    private int firstNodeIndex;
     private boolean isAddingSecondNode;
     private String secondNodeChosen;
-    private Integer secondNodeIndex;
+    private int secondNodeIndex;
     
     // Keperluan algoritma
-    private Double[][] adjacencyMatrix;
+    private double[][] adjacencyMatrix;
     private ArrayList<Trituple> nodes;
-    private Integer numOfNodes;
+    private int numOfNodes;
+    private int numOfEdges;
     /**
      * Creates new form App
      */
@@ -58,13 +59,15 @@ public class App extends javax.swing.JFrame
         initComponents();
         this.inputFile = null;
         this.fileInput = null;
-        this.firstNodeChosen = null;
-        this.firstNodeIndex = null;
-        this.secondNodeChosen = null;
-        this.secondNodeIndex = null;
+        this.firstNodeChosen = Constants.emptyString;
+        this.firstNodeIndex = -1;
+        this.secondNodeChosen = Constants.emptyString;
+        this.secondNodeIndex = -1;
         this.adjacencyMatrix = null;
-        this.nodes = null;
-        this.numOfNodes = null;
+        this.nodes = new ArrayList<>();
+        this.path = new ArrayList<>();
+        this.numOfNodes = 0;
+        this.numOfEdges = 0;
     }
 
     /**
@@ -223,9 +226,9 @@ public class App extends javax.swing.JFrame
     }// </editor-fold>//GEN-END:initComponents
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        if(this.firstNodeIndex == null || this.secondNodeIndex == null) return;
+        if(this.firstNodeIndex == -1 || this.secondNodeIndex == -1) return;
 
-        this.path = new ArrayList<>();
+        this.path.clear();
         AStarAlgorithm();
 
         printPathJS();
@@ -239,7 +242,7 @@ public class App extends javax.swing.JFrame
         if(this.secondNodeChosen.equals(Constants.emptyString))
         {
             this.secondNodeChosen = null;
-            this.secondNodeIndex = null;
+            this.secondNodeIndex = -1;
             return;
         }
 
@@ -257,6 +260,18 @@ public class App extends javax.swing.JFrame
     private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseButtonActionPerformed
         try
         {
+            Trituple.numOfTrituples = 0;
+            this.inputFile = null;
+            this.fileInput = null;
+            this.firstNodeChosen = Constants.emptyString;
+            this.firstNodeIndex = -1;
+            this.secondNodeChosen = Constants.emptyString;
+            this.secondNodeIndex = -1;
+            this.adjacencyMatrix = null;
+            this.nodes.clear();
+            this.numOfNodes = 0;
+            this.numOfEdges = 0;
+        
             FileFilter filter = new FileNameExtensionFilter("Text files", "txt");
             this.browseDialog.setFileFilter(filter);
             this.browseDialog.showOpenDialog(this);
@@ -297,7 +312,7 @@ public class App extends javax.swing.JFrame
         if(this.firstNodeChosen.equals(Constants.emptyString))
         {
             this.firstNodeChosen = null;
-            this.firstNodeIndex = null;
+            this.firstNodeIndex = -1;
             secondNodeWarning.setText(Constants.cannotChooseSecondNodeMessage);
             chooseSecondNode.setSelectedItem(Constants.emptyString);
             chooseSecondNode.setEnabled(false);
@@ -398,12 +413,18 @@ public class App extends javax.swing.JFrame
             nodes.add(new Trituple(lat, lng, name));
         }
         
-        adjacencyMatrix = new Double[N][N];
+        adjacencyMatrix = new double[N][N];
         for(int i = 0; i < N; i++)
         {
             for(int j = 0; j < N; j++)
             {
-                adjacencyMatrix[i][j] = fileInput.nextDouble();
+                int a = fileInput.nextInt();
+                if(a == 0) adjacencyMatrix[i][j] = 0.0;
+                else
+                {
+                    adjacencyMatrix[i][j] = nodes.get(i).straightLineDistance(nodes.get(j));
+                    this.numOfEdges++;
+                }
             }
         }
     }
@@ -418,7 +439,7 @@ public class App extends javax.swing.JFrame
         PriorityQueueEntry top = null;
         Double currentDistance = null;
         Double estimatedDistance = null;
-        Integer currentNodeIndex = null;
+        int currentNodeIndex = -1;
         ArrayList<Integer> paths = null;
         
         while(!queue.isEmpty())
@@ -530,13 +551,16 @@ public class App extends javax.swing.JFrame
         try
         {
             FileWriter file = new FileWriter("./../../bin/nodes.js");
-            file.write("var nodes = [");
+//            file.write("var nodes = ");
+            file.write("[");
             for(Trituple t : this.nodes)
             {
                 file.write(t.toString());
+                if(t.index == Trituple.numOfTrituples - 1) continue;
                 file.write(", ");
             }
-            file.write("];");
+            file.write("]");
+//            file.write(";");
             file.close();
         }
         catch (IOException e)
@@ -550,8 +574,8 @@ public class App extends javax.swing.JFrame
         try
         {
             FileWriter file = new FileWriter("./../../bin/firstNode.js");
-            file.write("var firstNode = ");
-            if(this.firstNodeIndex == null)
+            // file.write("var firstNode = ");
+            if(this.firstNodeIndex == -1)
             {
                 file.write("{}");
             }
@@ -559,7 +583,7 @@ public class App extends javax.swing.JFrame
             {
                 file.write(nodes.get(firstNodeIndex).toString());
             }
-            file.write(";");
+            // file.write(";");
             file.close();
         }
         catch (IOException e)
@@ -573,8 +597,8 @@ public class App extends javax.swing.JFrame
         try
         {
             FileWriter file = new FileWriter("./../../bin/secondNode.js");
-            file.write("var secondNode = ");
-            if(this.secondNodeIndex == null)
+            // file.write("var secondNode = ");
+            if(this.secondNodeIndex == -1)
             {
                 file.write("{}");
             }
@@ -582,7 +606,7 @@ public class App extends javax.swing.JFrame
             {
                 file.write(nodes.get(secondNodeIndex).toString());
             }
-            file.write(";");
+            // file.write(";");
             file.close();
         }
         catch (IOException e)
@@ -596,13 +620,18 @@ public class App extends javax.swing.JFrame
         try
         {
             FileWriter file = new FileWriter("./../../bin/path.js");
-            file.write("var path = [");
+            // file.write("var path = ");
+            int cnt = 0;
+            file.write("[");
             for(Integer i : this.path)
             {
                 file.write(this.nodes.get(i).toString());
+                cnt++;
+                if(cnt == this.path.size()) continue;
                 file.write(", ");
             }
-            file.write("];");
+            file.write("]");
+            // file.write(";");
             file.close();
         }
         catch (IOException e)
@@ -615,7 +644,9 @@ public class App extends javax.swing.JFrame
     {
         try{
             FileWriter file = new FileWriter("./../../bin/graph.js");
-            file.write("var graph = [");
+            // file.write("var graph = ");
+            int cnt = 0;
+            file.write("[");
             for(int i = 0; i < numOfNodes; i++){
                 for(int j = i+1; j < numOfNodes; j++){
                     if(adjacencyMatrix[i][j] != 0){
@@ -623,11 +654,16 @@ public class App extends javax.swing.JFrame
                         file.write(this.nodes.get(i).toString());
                         file.write(", ");
                         file.write(this.nodes.get(j).toString());
-                        file.write("], ");
+                        file.write("]");
+                        cnt++;
+                        
+                        if(this.numOfEdges / 2 == cnt) continue;
+                        file.write(", ");
                     }
                 }
             }
-            file.write("];");
+            file.write("]");
+            // file.write(";");
             file.close();
         }
         catch(IOException e)

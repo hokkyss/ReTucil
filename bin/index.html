@@ -13,6 +13,13 @@
     <script src ="path.js"></script>
     <script src ="firstNode.js"></script>
     <script src ="secondNode.js"></script>
+    <script>
+        var nodes;
+        var graph;
+        var path;
+        var firstNode;
+        var secondNode;
+    </script>
     <style>
         #map {
             width: 99vw;
@@ -21,8 +28,34 @@
     </style>
 </head>
 <body>
-    <button onclick=createPath()>Show Path</button>
+    <button onclick=createPath()>Reload</button>
     <div id='map' class='map'></div>
+    <script>
+        function readTextFile(file)
+        {
+            var allText = "";
+            var rawFile = new XMLHttpRequest();
+            rawFile.open("GET", file, false);
+            rawFile.onreadystatechange = function ()
+            {
+                if(rawFile.readyState === 4)
+                {
+                    if(rawFile.status === 200 || rawFile.status == 0)
+                    {
+                        allText = rawFile.responseText;
+                    }
+                }
+            }
+            rawFile.send(null);
+            return allText;
+        }
+        
+        nodes = JSON.parse(readTextFile('http://localhost:8000/nodes.js'));
+        firstNode = JSON.parse(readTextFile('http://localhost:8000/firstNode.js'));
+        secondNode = JSON.parse(readTextFile('http://localhost:8000/secondNode.js'));
+        graph = JSON.parse(readTextFile('http://localhost:8000/graph.js'));
+        path = JSON.parse(readTextFile('http://localhost:8000/path.js'));
+    </script>
     <script>
         var map = tt.map({
             key: 'RRF5SbdgsyPTbw2a6yRBv1TAv7WTZ3RT',
@@ -89,6 +122,13 @@
         });
 
         var createPath = function(){
+            
+            nodes = JSON.parse(readTextFile('http://localhost:8000/nodes.js'));
+            firstNode = JSON.parse(readTextFile('http://localhost:8000/firstNode.js'));
+            secondNode = JSON.parse(readTextFile('http://localhost:8000/secondNode.js'));
+            graph = JSON.parse(readTextFile('http://localhost:8000/graph.js'));
+            path = JSON.parse(readTextFile('http://localhost:8000/path.js'));
+            
             var pathLine = [];
             path.forEach(function (node) {
                 pathLine.push(node.geometry.coordinates);
@@ -112,7 +152,6 @@
                 } 
             });
         }
-
     </script>
 </body>
 </html>
