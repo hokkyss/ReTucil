@@ -1,1 +1,1 @@
-var path = [{type: "Feature", geometry: {type: "Point", coordinates: [107.610395, -6.891927]},properties:{name: "SATU"}}, {type: "Feature", geometry: {type: "Point", coordinates: [107.609709, -6.891039]},properties:{name: "DUA"}}, ];
+var path = [{type: "Feature", geometry: {type: "Point", coordinates: [107.610395, -6.891927]},properties:{name: "SATU"}}, {type: "Feature", geometry: {type: "Point", coordinates: [107.609709, -6.891039]},properties:{name: "DUA"}}, {type: "Feature", geometry: {type: "Point", coordinates: [107.608201, -6.891061]},properties:{name: "ENAM"}}, ];
