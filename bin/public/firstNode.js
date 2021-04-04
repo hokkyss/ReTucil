@@ -1,1 +1,0 @@
-var firstNode = {type: "Feature", geometry: {type: "Point", coordinates: [107.609709, -6.891039]},properties:{name: "DUA"}};

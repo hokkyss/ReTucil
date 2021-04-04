@@ -45,7 +45,9 @@ public class App extends javax.swing.JFrame
     private Integer secondNodeIndex;
     
     // Keperluan algoritma
-    private Double[][] adjacencyMatrix;
+    //private Double[][] adjacencyMatrix;
+    private int[][] adjacencyMatrix;
+    private double[][] SLD;
     private ArrayList<Trituple> nodes;
     private Integer numOfNodes;
     /**
@@ -399,12 +401,23 @@ public class App extends javax.swing.JFrame
             nodes.add(new Trituple(lat, lng, name));
         }
         
-        adjacencyMatrix = new Double[N][N];
+        //adjacencyMatrix = new Double[N][N];
+        SLD = new double[N][N];
+        adjacencyMatrix = new int[N][N];
         for(int i = 0; i < N; i++)
         {
             for(int j = 0; j < N; j++)
             {
-                adjacencyMatrix[i][j] = fileInput.nextDouble();
+                adjacencyMatrix[i][j] = fileInput.nextInt();
+                SLD[i][j] = nodes.get(i).straightLineDistance(nodes.get(j));
+                /*
+                if(a == 0) adjacencyMatrix[i][j] = 0;
+                else
+                {
+                    adjacencyMatrix[i][j] = nodes.get(i).straightLineDistance(nodes.get(j));
+                    this.numOfEdges++;
+                }
+                */
             }
         }
     }
@@ -442,15 +455,15 @@ public class App extends javax.swing.JFrame
             for(int i = 0; i < numOfNodes; i++)
             {
                 if(i == currentNodeIndex) continue;
-                if(this.adjacencyMatrix[currentNodeIndex][i] == 0.0) continue;
+                if(this.adjacencyMatrix[currentNodeIndex][i] == 0) continue;
                 
-                Double nextDistance = currentDistance + adjacencyMatrix[currentNodeIndex][i];
-                Double nextEstimatedDistance = currentDistance + nodes.get(i).straightLineDistance(nodes.get(currentNodeIndex));
-                Integer nextNode = i;
+                double nextDistance = currentDistance + SLD[currentNodeIndex][i];
+                double nextEstimatedDistance = nextDistance + SLD[i][secondNodeIndex];
+                int nextNode = i;
                 
                 ArrayList<Integer> newPath = new ArrayList<>();
                 // copy semua paths ke dalam newPath
-                for(Integer passedNodes : paths)
+                for(int passedNodes : paths)
                 {
                     newPath.add(passedNodes);
                 }
