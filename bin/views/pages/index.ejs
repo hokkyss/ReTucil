@@ -24,6 +24,7 @@
             
             nodes.forEach(function (marker) {
                 createMarker(marker);
+                
                 var popupOffsets = {
                     top: [0, 0],
                     bottom: [0, -70],
@@ -84,10 +85,45 @@
                     }
                 },
                 'paint' : {
-                    'line-color' : 'green',
-                    'line-width' : 5
+                    'line-color' : 'yellow',
+                    'line-width' : 3
                 } 
             });
+            var popupOffsets = {
+                top: [0, 0],
+                bottom: [0, -70],
+                'bottom-right': [0, -70],
+                'bottom-left': [0, -70],
+                left: [25, -35],
+                right: [-25, -35]
+            }
+            markers.forEach(function (marker, index) {
+                // console.log(marker.getLngLat().lng);
+                if(marker.getLngLat().lng == secondNode.geometry.coordinates[0] && marker.getLngLat().lat == secondNode.geometry.coordinates[1]){
+                    markers.splice(index, 1);
+                    marker.remove();
+                    var element = document.createElement('div');
+                    element.id = 'dest';
+                    marker = new tt.Marker({element: element}).setLngLat(secondNode.geometry.coordinates).addTo(map);
+                    markers.splice(index, 0, marker)
+                    var popup = new tt.Popup({offset: popupOffsets}).setHTML(secondNode.properties.name);
+                    marker.setPopup(popup).togglePopup();
+                }
+                else if(marker.getLngLat().lng == firstNode.geometry.coordinates[0] && marker.getLngLat().lat == firstNode.geometry.coordinates[1]){
+                    markers.splice(index, 1);
+                    marker.remove();
+                    var element = document.createElement('div');
+                    element.id = 'src';
+                    marker = new tt.Marker({element: element}).setLngLat(firstNode.geometry.coordinates).addTo(map);
+                    markers.splice(index, 0, marker)
+                    var popup = new tt.Popup({offset: popupOffsets}).setHTML(firstNode.properties.name);
+                    marker.setPopup(popup).togglePopup();
+                }
+            })
+            markers.forEach(function (marker, index){
+                console.log(marker);
+                console.log(index);
+            })
         }
 
     </script>
@@ -95,7 +131,16 @@
 </html>
 
 <style>
-    .navbar.transparent.navbar-inverse .navbar-inner {
-        background: rgba(0,0,0,0.4);
+    #dest {
+        background-image: url('images/dest.ico');
+        background-size: cover;
+        width: 45px;
+        height: 45px;
+    }
+    #src {
+        background-image: url('images/src.ico');
+        background-size: cover;
+        width: 45px;
+        height: 45px;
     }
 </style>
