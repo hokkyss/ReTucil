@@ -24,6 +24,20 @@ app.get('/', function (req, res) {
     });
 });
 
+app.get('/maps', function (req, res) {
+    var page_name = 'maps'
+    res.render('pages/index', {
+        page_name : page_name
+    });
+});
+
+app.get('/result', function (req, res) {
+    var page_name = 'result'
+    res.render('pages/index', {
+        page_name : page_name
+    });
+});
+
 app.get('/about', function (req, res) {
     var page_name = 'about'
     res.render('pages/about', {

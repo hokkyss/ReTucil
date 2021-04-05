@@ -127,6 +127,13 @@
         }
 
     </script>
+    <% if (page_name === 'result') {  %>
+        <script>
+            map.on('load', function() {
+                createPath();
+            })
+        </script>
+    <% } %>
 </body>
 </html>
 

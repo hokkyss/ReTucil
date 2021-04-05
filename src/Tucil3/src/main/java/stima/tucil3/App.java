@@ -243,7 +243,7 @@ public class App extends javax.swing.JFrame
         AStarAlgorithm();
 
         printPathJS();
-        browser.navigation().loadUrl("http://localhost:8000");
+        browser.navigation().loadUrl("http://localhost:8000/result");
     }//GEN-LAST:event_submitButtonActionPerformed
 
     private void chooseSecondNodeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chooseSecondNodeItemStateChanged

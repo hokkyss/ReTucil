@@ -29,17 +29,18 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="font-family: Raleway;">
+        <a class="navbar-brand" href="/" style="color:gray;">Re:Tucil</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
+                <% if (page_name === 'result' || page_name === 'maps') {  %>
                 <li class="nav-item active">
-                    <form method="get" action="/">
-                        <button class="btn btn-secondary btn-outline-secondary" type="submit" style="margin-left: 10px; margin-right: 10px">Maps</button>
+                    <form method="get" action="/maps">
+                        <button class="btn btn-secondary btn-outline-secondary" type="submit" style="margin-left: 10px; margin-right: 10px">Clear Path</button>
                     </form>
                 </li>
-                <% if (page_name === 'index') {  %>
                 <li class="nav-item">
                     <button type="button" class="btn btn-secondary btn-outline-secondary" onclick=createPath() style="margin-left: 10px; margin-right: 10px">Show Path</button>
                 </li>
