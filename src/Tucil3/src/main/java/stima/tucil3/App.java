@@ -232,7 +232,7 @@ public class App extends javax.swing.JFrame
         AStarAlgorithm();
 
         printPathJS();
-        
+        browser.navigation().loadUrl("http://localhost:8000"); 
     }//GEN-LAST:event_submitButtonActionPerformed
 
     private void chooseSecondNodeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chooseSecondNodeItemStateChanged
@@ -279,8 +279,8 @@ public class App extends javax.swing.JFrame
             this.browseButton.setText("Change");
             fileNameLabel.setText(inputFile.getName());
 
-//            loadMaps();
             printGraph();
+            browser.navigation().loadUrl("http://localhost:8000"); 
         }
         catch (Exception e)
         {
@@ -485,11 +485,13 @@ public class App extends javax.swing.JFrame
         }
     }
     
-    private void loadMaps(){
-        System.setProperty("jxbrowser.license.key", "1BNDHFSC1FYNQ0G0I8NSW5HX5CAC271M98DIQCD0NF84MDN82Z3XELT23S4LRUXFZG51X0");
-        EngineOptions options = EngineOptions.newBuilder(HARDWARE_ACCELERATED).build();
-        Engine engine = Engine.newInstance(options);
+    Engine engine = Engine.newInstance(
+        EngineOptions.newBuilder(HARDWARE_ACCELERATED)
+                .licenseKey("1BNDHFSC1FYNQ0G0I8NSW5HX5CAC271M98DIQCD0NF84MDN82Z3XELT23S4LRUXFZG51X0")
+                .build());
         Browser browser = engine.newBrowser();
+    
+    private void loadMaps(){
 
         SwingUtilities.invokeLater(() -> {
             BrowserView view = BrowserView.newInstance(browser);
@@ -505,7 +507,7 @@ public class App extends javax.swing.JFrame
             
             /* Sesuaikan letak file HTML nya */
 //            browser.navigation().loadUrl("C:\\Users\\chris\\Desktop\\tucil\\IF2211_Tucil3\\bin\\index.html"); 
-            browser.navigation().loadUrl("http://localhost:8000"); 
+            
         });
     }
     
