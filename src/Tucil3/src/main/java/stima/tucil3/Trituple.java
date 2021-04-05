@@ -57,6 +57,14 @@ public class Trituple {
         return s;
     }
     
+    public String toStringVer2()
+    {
+        String s;
+        s = this.name;
+        
+        return s;
+    }
+    
     // dihitung menggunakan Haversine Formula
     public double straightLineDistance(Trituple other)
     {

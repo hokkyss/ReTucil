@@ -30,4 +30,4 @@ hs_err_pid*
 *.vs
 /src/Tucil3/target/
 
-node_modules
+./bin/node_modules

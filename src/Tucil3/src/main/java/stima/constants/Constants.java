@@ -17,6 +17,10 @@ public class Constants {
     public static final Double mapsPanelRatio = 0.7;
     public static final double earthRadiusInMeter = 6371000.0;
     public static final String emptyString = "";
+    public static final String solution = "The solution will appear here!";
+    public static final String chooseTwoNodes = "You must choose 2 nodes!";
+    public static final String chooseFile = "Choose your file!";
+    public static final String noPath = "No path to the destination :(";
     public static final String fileNotFoundMessage = "File not found!";
     public static final String chooseFileMessage = "Choose your file first!";
     public static final String canChooseFirstNodeMessage = "Choose your starting point!";
