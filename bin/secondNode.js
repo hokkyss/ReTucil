@@ -1,1 +1,1 @@
-{"type": "Feature", "geometry": {"type": "Point", "coordinates": [107.610427, -6.89265]}, "properties": {"name": "TUJUH"}}
+{"type": "Feature", "geometry": {"type": "Point", "coordinates": [107.611053, -6.891359]}, "properties": {"name": "TIGA"}}

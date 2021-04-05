@@ -1,1 +1,1 @@
-{"type": "Feature", "geometry": {"type": "Point", "coordinates": [107.61158, -6.891003]}, "properties": {"name": "EMPAT"}}
+{"type": "Feature", "geometry": {"type": "Point", "coordinates": [107.608452, -6.893891]}, "properties": {"name": "EMPAT BELAS"}}
