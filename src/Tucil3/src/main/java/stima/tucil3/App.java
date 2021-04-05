@@ -15,7 +15,6 @@ import com.teamdev.jxbrowser.engine.Engine;
 import com.teamdev.jxbrowser.engine.EngineOptions;
 import com.teamdev.jxbrowser.view.swing.BrowserView;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 
 // java UI
 import javax.swing.JPanel;
@@ -30,9 +29,6 @@ import stima.constants.Constants;
  */
 public class App extends javax.swing.JFrame
 {
-    private JPanel panel;
-    private Dimension appSize;
-    
     private File inputFile;
     private Scanner fileInput;
     
@@ -45,9 +41,7 @@ public class App extends javax.swing.JFrame
     private Integer secondNodeIndex;
     
     // Keperluan algoritma
-    //private Double[][] adjacencyMatrix;
-    private int[][] adjacencyMatrix;
-    private double[][] SLD;
+    private Double[][] adjacencyMatrix;
     private ArrayList<Trituple> nodes;
     private Integer numOfNodes;
     /**
@@ -58,7 +52,6 @@ public class App extends javax.swing.JFrame
     
     public App(){
         initComponents();
-        loadMaps();
         this.inputFile = null;
         this.fileInput = null;
         this.firstNodeChosen = null;
@@ -80,15 +73,14 @@ public class App extends javax.swing.JFrame
     private void initComponents() {
 
         browseDialog = new javax.swing.JFileChooser();
-        mapsPanel = new javax.swing.JPanel();
-        parent = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        browseButton = new javax.swing.JButton();
+        fileNameLabel = new javax.swing.JLabel();
+        mapsPanel = new javax.swing.JPanel();
         chooseFirstNode = new javax.swing.JComboBox<>();
         firstNodeWarning = new javax.swing.JLabel();
-        fileNameLabel = new javax.swing.JLabel();
-        browseButton = new javax.swing.JButton();
-        chooseSecondNode = new javax.swing.JComboBox<>();
         secondNodeWarning = new javax.swing.JLabel();
+        chooseSecondNode = new javax.swing.JComboBox<>();
         submitButton = new javax.swing.JButton();
 
         browseDialog.setAcceptAllFileFilterUsed(false);
@@ -96,29 +88,33 @@ public class App extends javax.swing.JFrame
         browseDialog.setName("browseDialog"); // NOI18N
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        addWindowStateListener(new java.awt.event.WindowStateListener() {
-            public void windowStateChanged(java.awt.event.WindowEvent evt) {
-                formWindowStateChanged(evt);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI Black", 0, 24)); // NOI18N
+        jLabel1.setText("Re:Tucil");
+
+        browseButton.setLabel("Browse");
+        browseButton.setName("browseButton"); // NOI18N
+        browseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                browseButtonActionPerformed(evt);
             }
         });
 
-        mapsPanel.setAlignmentX(0.0F);
-        mapsPanel.setAlignmentY(0.0F);
+        fileNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        fileNameLabel.setText("File not found!");
+
+        mapsPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout mapsPanelLayout = new javax.swing.GroupLayout(mapsPanel);
         mapsPanel.setLayout(mapsPanelLayout);
         mapsPanelLayout.setHorizontalGroup(
             mapsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 569, Short.MAX_VALUE)
+            .addGap(0, 675, Short.MAX_VALUE)
         );
         mapsPanelLayout.setVerticalGroup(
             mapsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 551, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
-
-        jLabel1.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Re:Tucil");
 
         chooseFirstNode.setAutoscrolls(true);
         chooseFirstNode.setEnabled(false);
@@ -130,19 +126,10 @@ public class App extends javax.swing.JFrame
         });
 
         firstNodeWarning.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        firstNodeWarning.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         firstNodeWarning.setText(Constants.chooseFileMessage);
 
-        fileNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        fileNameLabel.setText("File not found!");
-
-        browseButton.setLabel("Browse");
-        browseButton.setName("browseButton"); // NOI18N
-        browseButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                browseButtonActionPerformed(evt);
-            }
-        });
+        secondNodeWarning.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        secondNodeWarning.setText(Constants.chooseFileMessage);
 
         chooseSecondNode.setAutoscrolls(true);
         chooseSecondNode.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -154,10 +141,6 @@ public class App extends javax.swing.JFrame
             }
         });
 
-        secondNodeWarning.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        secondNodeWarning.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        secondNodeWarning.setText(Constants.chooseFileMessage);
-
         submitButton.setText("Submit");
         submitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -165,79 +148,90 @@ public class App extends javax.swing.JFrame
             }
         });
 
-        javax.swing.GroupLayout parentLayout = new javax.swing.GroupLayout(parent);
-        parent.setLayout(parentLayout);
-        parentLayout.setHorizontalGroup(
-            parentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(parentLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(parentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(secondNodeWarning, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(firstNodeWarning, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(parentLayout.createSequentialGroup()
-                        .addGroup(parentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(submitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(chooseFirstNode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(chooseSecondNode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(fileNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-                            .addComponent(browseButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        parentLayout.setVerticalGroup(
-            parentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, parentLayout.createSequentialGroup()
-                .addGap(45, 45, 45)
-                .addComponent(jLabel1)
-                .addGap(43, 43, 43)
-                .addComponent(fileNameLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(browseButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
-                .addComponent(firstNodeWarning)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(chooseFirstNode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addComponent(secondNodeWarning)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(chooseSecondNode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
-                .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(97, 97, 97))
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(parent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(chooseFirstNode, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(secondNodeWarning, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(chooseSecondNode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(firstNodeWarning, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(browseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(submitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(fileNameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addComponent(mapsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(parent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(mapsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(fileNameLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(browseButton)
+                .addGap(65, 65, 65)
+                .addComponent(firstNodeWarning)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chooseFirstNode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(secondNodeWarning)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chooseSecondNode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(66, 66, 66)
+                .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(100, Short.MAX_VALUE))
+            .addComponent(mapsPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        if(this.firstNodeIndex == null || this.secondNodeIndex == null) return;
-
-        this.path = new ArrayList<>();
-        AStarAlgorithm();
-
-        printPathJS();
-        
-    }//GEN-LAST:event_submitButtonActionPerformed
+    private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseButtonActionPerformed
+        try
+        {   
+            FileFilter filter = new FileNameExtensionFilter("Text files", "txt");
+            this.browseDialog.setFileFilter(filter);
+            this.browseDialog.showOpenDialog(this);
+            
+            inputFile = browseDialog.getSelectedFile();
+            fileInput = new Scanner(inputFile);
+            convertFileToGraph();
+            populateFirstNodeChoice();
+            printNodesJS();
+            
+            this.firstNodeWarning.setText(Constants.canChooseFirstNodeMessage);
+            this.chooseFirstNode.setEnabled(true);
+            
+            this.secondNodeWarning.setText(Constants.cannotChooseSecondNodeMessage);
+            this.chooseSecondNode.setEnabled(false);
+            
+            this.browseButton.setText("Change");
+            fileNameLabel.setText(inputFile.getName());
+            
+            loadMaps();
+        }
+        catch (Exception e)
+        {
+            this.browseButton.setText("Browse");
+            fileNameLabel.setText(Constants.fileNotFoundMessage);
+            
+            firstNodeWarning.setText(Constants.chooseFileMessage);
+            chooseFirstNode.setEnabled(false);
+            secondNodeWarning.setText(Constants.chooseFileMessage);
+        }
+    }//GEN-LAST:event_browseButtonActionPerformed
 
     private void chooseSecondNodeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chooseSecondNodeItemStateChanged
         if(this.isAddingSecondNode) return;
-
+        
         this.secondNodeChosen = this.chooseSecondNode.getSelectedItem().toString();
         if(this.secondNodeChosen.equals(Constants.emptyString))
         {
@@ -245,7 +239,7 @@ public class App extends javax.swing.JFrame
             this.secondNodeIndex = null;
             return;
         }
-
+        
         for(Trituple t : this.nodes)
         {
             if(t.name.equals(this.secondNodeChosen))
@@ -257,45 +251,9 @@ public class App extends javax.swing.JFrame
         printSecondNodeJS();
     }//GEN-LAST:event_chooseSecondNodeItemStateChanged
 
-    private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseButtonActionPerformed
-        try
-        {
-            FileFilter filter = new FileNameExtensionFilter("Text files", "txt");
-            this.browseDialog.setFileFilter(filter);
-            this.browseDialog.showOpenDialog(this);
-
-            inputFile = browseDialog.getSelectedFile();
-            fileInput = new Scanner(inputFile);
-            convertFileToGraph();
-            populateFirstNodeChoice();
-            printNodesJS();
-
-            this.firstNodeWarning.setText(Constants.canChooseFirstNodeMessage);
-            this.chooseFirstNode.setEnabled(true);
-
-            this.secondNodeWarning.setText(Constants.cannotChooseSecondNodeMessage);
-            this.chooseSecondNode.setEnabled(false);
-
-            this.browseButton.setText("Change");
-            fileNameLabel.setText(inputFile.getName());
-
-//            loadMaps();
-            printGraph();
-        }
-        catch (Exception e)
-        {
-            this.browseButton.setText("Browse");
-            fileNameLabel.setText(Constants.fileNotFoundMessage);
-
-            firstNodeWarning.setText(Constants.chooseFileMessage);
-            chooseFirstNode.setEnabled(false);
-            secondNodeWarning.setText(Constants.chooseFileMessage);
-        }
-    }//GEN-LAST:event_browseButtonActionPerformed
-
     private void chooseFirstNodeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chooseFirstNodeItemStateChanged
         if(this.isAddingFirstNode) return;
-
+        
         this.firstNodeChosen = this.chooseFirstNode.getSelectedItem().toString();
         if(this.firstNodeChosen.equals(Constants.emptyString))
         {
@@ -306,7 +264,7 @@ public class App extends javax.swing.JFrame
             chooseSecondNode.setEnabled(false);
             return;
         }
-
+        
         for(Trituple t : this.nodes)
         {
             if(t.name.equals(this.firstNodeChosen))
@@ -315,25 +273,21 @@ public class App extends javax.swing.JFrame
                 break;
             }
         }
-
+        
         printFirstNodeJS();
         populateSecondNodeChoice();
         this.secondNodeWarning.setText(Constants.canChooseSecondNodeMessage);
         this.chooseSecondNode.setEnabled(true);
     }//GEN-LAST:event_chooseFirstNodeItemStateChanged
 
-    private void formWindowStateChanged(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowStateChanged
-        this.mapsPanel.removeAll();
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+        if(this.firstNodeIndex == null || this.secondNodeIndex == null) return;
         
-        this.appSize = this.getSize();
+        this.path = new ArrayList<>();
+        AStarAlgorithm();
         
-        this.mapsPanel.setSize((int)(appSize.width * Constants.mapsPanelRatio), appSize.height);
-        
-        this.panel.setSize(this.mapsPanel.getWidth(), (int)(this.mapsPanel.getHeight() * (1 + Constants.innerMapsPanelRatio)));
-        mapsPanel.add(panel);
-        mapsPanel.revalidate();
-        mapsPanel.repaint();
-    }//GEN-LAST:event_formWindowStateChanged
+        printPathJS();
+    }//GEN-LAST:event_submitButtonActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -376,7 +330,6 @@ public class App extends javax.swing.JFrame
     private javax.swing.JLabel firstNodeWarning;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel mapsPanel;
-    private javax.swing.JPanel parent;
     private javax.swing.JLabel secondNodeWarning;
     private javax.swing.JButton submitButton;
     // End of variables declaration//GEN-END:variables
@@ -401,23 +354,12 @@ public class App extends javax.swing.JFrame
             nodes.add(new Trituple(lat, lng, name));
         }
         
-        //adjacencyMatrix = new Double[N][N];
-        SLD = new double[N][N];
-        adjacencyMatrix = new int[N][N];
+        adjacencyMatrix = new Double[N][N];
         for(int i = 0; i < N; i++)
         {
             for(int j = 0; j < N; j++)
             {
-                adjacencyMatrix[i][j] = fileInput.nextInt();
-                SLD[i][j] = nodes.get(i).straightLineDistance(nodes.get(j));
-                /*
-                if(a == 0) adjacencyMatrix[i][j] = 0;
-                else
-                {
-                    adjacencyMatrix[i][j] = nodes.get(i).straightLineDistance(nodes.get(j));
-                    this.numOfEdges++;
-                }
-                */
+                adjacencyMatrix[i][j] = fileInput.nextDouble();
             }
         }
     }
@@ -455,15 +397,14 @@ public class App extends javax.swing.JFrame
             for(int i = 0; i < numOfNodes; i++)
             {
                 if(i == currentNodeIndex) continue;
-                if(this.adjacencyMatrix[currentNodeIndex][i] == 0) continue;
                 
-                double nextDistance = currentDistance + SLD[currentNodeIndex][i];
-                double nextEstimatedDistance = nextDistance + SLD[i][secondNodeIndex];
-                int nextNode = i;
+                Double nextDistance = currentDistance + adjacencyMatrix[currentNodeIndex][i];
+                Double nextEstimatedDistance = currentDistance + nodes.get(i).straightLineDistance(nodes.get(currentNodeIndex));
+                Integer nextNode = i;
                 
                 ArrayList<Integer> newPath = new ArrayList<>();
                 // copy semua paths ke dalam newPath
-                for(int passedNodes : paths)
+                for(Integer passedNodes : paths)
                 {
                     newPath.add(passedNodes);
                 }
@@ -494,17 +435,15 @@ public class App extends javax.swing.JFrame
         SwingUtilities.invokeLater(() -> {
             BrowserView view = BrowserView.newInstance(browser);
             
-            panel = new JPanel(new BorderLayout());
+            JPanel panel = new JPanel(new BorderLayout());
             panel.add(view);
-            panel.setSize(this.mapsPanel.getSize());
-            // 675 x 518
-            // panel.setSize(1200,800); //gmn cara buat size nya dinamis
+            panel.setSize(1200,800); //gmn cara buat size nya dinamis
             mapsPanel.add(panel);
             mapsPanel.revalidate();
             mapsPanel.repaint();
             
             /* Sesuaikan letak file HTML nya */
-//            browser.navigation().loadUrl("C:\\Users\\chris\\Desktop\\tucil\\IF2211_Tucil3\\bin\\index.html"); 
+//            browser.navigation().loadUrl("C:\\Users\\chris\\Desktop\\tucil\\IF2211_Tucil3\\src\\Tucil3\\HTML\\maps.html"); 
             browser.navigation().loadUrl("http://localhost:8000"); 
         });
     }
@@ -544,7 +483,7 @@ public class App extends javax.swing.JFrame
     {
         try
         {
-            FileWriter file = new FileWriter("./../../bin/public/nodes.js");
+            FileWriter file = new FileWriter("./../../bin/nodes.js");
             file.write("var nodes = [");
             for(Trituple t : this.nodes)
             {
@@ -564,7 +503,7 @@ public class App extends javax.swing.JFrame
     {
         try
         {
-            FileWriter file = new FileWriter("./../../bin/public/firstNode.js");
+            FileWriter file = new FileWriter("./../../bin/firstNode.js");
             file.write("var firstNode = ");
             if(this.firstNodeIndex == null)
             {
@@ -587,7 +526,7 @@ public class App extends javax.swing.JFrame
     {
         try
         {
-            FileWriter file = new FileWriter("./../../bin/public/secondNode.js");
+            FileWriter file = new FileWriter("./../../bin/secondNode.js");
             file.write("var secondNode = ");
             if(this.secondNodeIndex == null)
             {
@@ -610,7 +549,7 @@ public class App extends javax.swing.JFrame
     {
         try
         {
-            FileWriter file = new FileWriter("./../../bin/public/path.js");
+            FileWriter file = new FileWriter("./../../bin/path.js");
             file.write("var path = [");
             for(Integer i : this.path)
             {
@@ -621,31 +560,6 @@ public class App extends javax.swing.JFrame
             file.close();
         }
         catch (IOException e)
-        {
-            // do nothing
-        }
-    }
-    
-    private void printGraph()
-    {
-        try{
-            FileWriter file = new FileWriter("./../../bin/public/graph.js");
-            file.write("var graph = [");
-            for(int i = 0; i < numOfNodes; i++){
-                for(int j = i+1; j < numOfNodes; j++){
-                    if(adjacencyMatrix[i][j] != 0){
-                        file.write("[");
-                        file.write(this.nodes.get(i).toString());
-                        file.write(", ");
-                        file.write(this.nodes.get(j).toString());
-                        file.write("], ");
-                    }
-                }
-            }
-            file.write("];");
-            file.close();
-        }
-        catch(IOException e)
         {
             // do nothing
         }

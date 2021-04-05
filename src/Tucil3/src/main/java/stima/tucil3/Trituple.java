@@ -58,7 +58,7 @@ public class Trituple {
     }
     
     // dihitung menggunakan Haversine Formula
-    public double straightLineDistance(Trituple other)
+    public Double straightLineDistance(Trituple other)
     {
         double pi1 = this.lat * Math.PI/180;
         double pi2 = other.lat * Math.PI/180;
@@ -66,7 +66,7 @@ public class Trituple {
         double deltaPi = (this.lat - other.lat) * Math.PI/180;
         double deltaLambda = (this.lng - other.lng) * Math.PI/180;
         
-        double a = (Math.pow(Math.sin(deltaPi / 2), 2)) + (Math.cos(pi1) * Math.cos(pi2) * Math.pow(Math.sin(deltaLambda / 2), 2));
+        double a = Math.pow(Math.sin(deltaLambda / 2), 2) + (Math.cos(pi1) * Math.cos(pi2) * Math.pow(Math.sin(deltaLambda), 2));
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         
         return Constants.earthRadiusInMeter * c;

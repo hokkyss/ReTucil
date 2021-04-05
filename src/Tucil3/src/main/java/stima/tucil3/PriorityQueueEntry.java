@@ -28,15 +28,4 @@ public class PriorityQueueEntry {
     {
         return this.sum.compareTo(other.sum);
     }
-    
-    public String toString()
-    {
-        String s = "(" + this.distanceSoFar + ", " + (this.nodeIndex + 1) + ", [";
-        for(int i : path)
-        {
-            s = s + (i + 1) + ", ";
-        }
-        s = s + "])";
-        return s;
-    }
 }

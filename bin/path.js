@@ -1,0 +1,1 @@
+var path = [{type: "Feature", geometry: {type: "Point", coordinates: [107.610395, -6.891927]},properties:{name: "SATU"}}, {type: "Feature", geometry: {type: "Point", coordinates: [107.611053, -6.891359]},properties:{name: "TIGA"}}, {type: "Feature", geometry: {type: "Point", coordinates: [107.611572, -6.8899]},properties:{name: "LIMA"}}, ];
