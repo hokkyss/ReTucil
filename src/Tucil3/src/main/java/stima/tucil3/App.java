@@ -39,17 +39,18 @@ public class App extends javax.swing.JFrame
     // user's choice
     private boolean isAddingFirstNode;
     private String firstNodeChosen;
-    private Integer firstNodeIndex;
+    private int firstNodeIndex;
     private boolean isAddingSecondNode;
     private String secondNodeChosen;
-    private Integer secondNodeIndex;
+    private int secondNodeIndex;
     
     // Keperluan algoritma
-    //private Double[][] adjacencyMatrix;
+    // private double[][] adjacencyMatrix;
     private int[][] adjacencyMatrix;
     private double[][] SLD;
     private ArrayList<Trituple> nodes;
-    private Integer numOfNodes;
+    private int numOfNodes;
+    private int numOfEdges;
     /**
      * Creates new form App
      */
@@ -61,13 +62,16 @@ public class App extends javax.swing.JFrame
         loadMaps();
         this.inputFile = null;
         this.fileInput = null;
-        this.firstNodeChosen = null;
-        this.firstNodeIndex = null;
-        this.secondNodeChosen = null;
-        this.secondNodeIndex = null;
+        this.firstNodeChosen = Constants.emptyString;
+        this.firstNodeIndex = -1;
+        this.secondNodeChosen = Constants.emptyString;
+        this.secondNodeIndex = -1;
         this.adjacencyMatrix = null;
-        this.nodes = null;
-        this.numOfNodes = null;
+        this.nodes = new ArrayList<>();
+        this.path = new ArrayList<>();
+        this.numOfNodes = 0;
+        this.numOfEdges = 0;
+        this.panel = new JPanel(new BorderLayout());
     }
 
     /**
@@ -82,7 +86,7 @@ public class App extends javax.swing.JFrame
         browseDialog = new javax.swing.JFileChooser();
         mapsPanel = new javax.swing.JPanel();
         parent = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        ReTucil = new javax.swing.JLabel();
         chooseFirstNode = new javax.swing.JComboBox<>();
         firstNodeWarning = new javax.swing.JLabel();
         fileNameLabel = new javax.swing.JLabel();
@@ -96,6 +100,7 @@ public class App extends javax.swing.JFrame
         browseDialog.setName("browseDialog"); // NOI18N
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(722, 551));
         addWindowStateListener(new java.awt.event.WindowStateListener() {
             public void windowStateChanged(java.awt.event.WindowEvent evt) {
                 formWindowStateChanged(evt);
@@ -104,21 +109,26 @@ public class App extends javax.swing.JFrame
 
         mapsPanel.setAlignmentX(0.0F);
         mapsPanel.setAlignmentY(0.0F);
+        mapsPanel.setPreferredSize(new java.awt.Dimension(506, 551));
 
         javax.swing.GroupLayout mapsPanelLayout = new javax.swing.GroupLayout(mapsPanel);
         mapsPanel.setLayout(mapsPanelLayout);
         mapsPanelLayout.setHorizontalGroup(
             mapsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 569, Short.MAX_VALUE)
+            .addGap(0, 500, Short.MAX_VALUE)
         );
         mapsPanelLayout.setVerticalGroup(
             mapsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 551, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jLabel1.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Re:Tucil");
+        parent.setBackground(new java.awt.Color(0, 137, 190));
+        parent.setPreferredSize(new java.awt.Dimension(216, 548));
+
+        ReTucil.setFont(new java.awt.Font("Consolas", 1, 24)); // NOI18N
+        ReTucil.setForeground(new java.awt.Color(255, 255, 255));
+        ReTucil.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        ReTucil.setText("Re:Tucil");
 
         chooseFirstNode.setAutoscrolls(true);
         chooseFirstNode.setEnabled(false);
@@ -130,9 +140,12 @@ public class App extends javax.swing.JFrame
         });
 
         firstNodeWarning.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        firstNodeWarning.setForeground(new java.awt.Color(255, 255, 255));
         firstNodeWarning.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         firstNodeWarning.setText(Constants.chooseFileMessage);
 
+        fileNameLabel.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        fileNameLabel.setForeground(new java.awt.Color(255, 255, 255));
         fileNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         fileNameLabel.setText("File not found!");
 
@@ -155,6 +168,7 @@ public class App extends javax.swing.JFrame
         });
 
         secondNodeWarning.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        secondNodeWarning.setForeground(new java.awt.Color(255, 255, 255));
         secondNodeWarning.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         secondNodeWarning.setText(Constants.chooseFileMessage);
 
@@ -174,27 +188,24 @@ public class App extends javax.swing.JFrame
                 .addGroup(parentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(secondNodeWarning, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(firstNodeWarning, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(parentLayout.createSequentialGroup()
-                        .addGroup(parentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(submitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(chooseFirstNode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(chooseSecondNode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(fileNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-                            .addComponent(browseButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(ReTucil, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                    .addComponent(fileNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(browseButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(chooseFirstNode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(chooseSecondNode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(submitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         parentLayout.setVerticalGroup(
             parentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, parentLayout.createSequentialGroup()
                 .addGap(45, 45, 45)
-                .addComponent(jLabel1)
+                .addComponent(ReTucil)
                 .addGap(43, 43, 43)
                 .addComponent(fileNameLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(browseButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
                 .addComponent(firstNodeWarning)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(chooseFirstNode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -213,26 +224,26 @@ public class App extends javax.swing.JFrame
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(parent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(mapsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mapsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(parent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(mapsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(parent, javax.swing.GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
+            .addComponent(mapsPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        if(this.firstNodeIndex == null || this.secondNodeIndex == null) return;
+        if(this.firstNodeIndex == -1 || this.secondNodeIndex == -1) return;
 
-        this.path = new ArrayList<>();
+        this.path.clear();
         AStarAlgorithm();
 
         printPathJS();
-        browser.navigation().loadUrl("http://localhost:8000"); 
+        browser.navigation().loadUrl("http://localhost:8000");
     }//GEN-LAST:event_submitButtonActionPerformed
 
     private void chooseSecondNodeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_chooseSecondNodeItemStateChanged
@@ -242,7 +253,7 @@ public class App extends javax.swing.JFrame
         if(this.secondNodeChosen.equals(Constants.emptyString))
         {
             this.secondNodeChosen = null;
-            this.secondNodeIndex = null;
+            this.secondNodeIndex = -1;
             return;
         }
 
@@ -260,6 +271,18 @@ public class App extends javax.swing.JFrame
     private void browseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_browseButtonActionPerformed
         try
         {
+            Trituple.numOfTrituples = 0;
+            this.inputFile = null;
+            this.fileInput = null;
+            this.firstNodeChosen = Constants.emptyString;
+            this.firstNodeIndex = -1;
+            this.secondNodeChosen = Constants.emptyString;
+            this.secondNodeIndex = -1;
+            this.adjacencyMatrix = null;
+            this.nodes.clear();
+            this.numOfNodes = 0;
+            this.numOfEdges = 0;
+        
             FileFilter filter = new FileNameExtensionFilter("Text files", "txt");
             this.browseDialog.setFileFilter(filter);
             this.browseDialog.showOpenDialog(this);
@@ -274,13 +297,14 @@ public class App extends javax.swing.JFrame
             this.chooseFirstNode.setEnabled(true);
 
             this.secondNodeWarning.setText(Constants.cannotChooseSecondNodeMessage);
+            this.chooseSecondNode.setSelectedItem(Constants.emptyString);
             this.chooseSecondNode.setEnabled(false);
 
             this.browseButton.setText("Change");
             fileNameLabel.setText(inputFile.getName());
 
             printGraph();
-            browser.navigation().loadUrl("http://localhost:8000"); 
+            browser.navigation().loadUrl("http://localhost:8000");
         }
         catch (Exception e)
         {
@@ -300,7 +324,7 @@ public class App extends javax.swing.JFrame
         if(this.firstNodeChosen.equals(Constants.emptyString))
         {
             this.firstNodeChosen = null;
-            this.firstNodeIndex = null;
+            this.firstNodeIndex = -1;
             secondNodeWarning.setText(Constants.cannotChooseSecondNodeMessage);
             chooseSecondNode.setSelectedItem(Constants.emptyString);
             chooseSecondNode.setEnabled(false);
@@ -327,9 +351,9 @@ public class App extends javax.swing.JFrame
         
         this.appSize = this.getSize();
         
-        this.mapsPanel.setSize((int)(appSize.width * Constants.mapsPanelRatio), appSize.height);
+        this.mapsPanel.setSize(appSize.width - this.parent.getWidth(), appSize.height);
         
-        this.panel.setSize(this.mapsPanel.getWidth(), (int)(this.mapsPanel.getHeight() * (1 + Constants.innerMapsPanelRatio)));
+        this.panel.setSize(this.mapsPanel.getWidth(), this.mapsPanel.getHeight());
         mapsPanel.add(panel);
         mapsPanel.revalidate();
         mapsPanel.repaint();
@@ -368,13 +392,13 @@ public class App extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel ReTucil;
     private javax.swing.JButton browseButton;
     private javax.swing.JFileChooser browseDialog;
     private javax.swing.JComboBox<String> chooseFirstNode;
     private javax.swing.JComboBox<String> chooseSecondNode;
     private javax.swing.JLabel fileNameLabel;
     private javax.swing.JLabel firstNodeWarning;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel mapsPanel;
     private javax.swing.JPanel parent;
     private javax.swing.JLabel secondNodeWarning;
@@ -401,7 +425,7 @@ public class App extends javax.swing.JFrame
             nodes.add(new Trituple(lat, lng, name));
         }
         
-        //adjacencyMatrix = new Double[N][N];
+        // adjacencyMatrix = new double[N][N];
         SLD = new double[N][N];
         adjacencyMatrix = new int[N][N];
         for(int i = 0; i < N; i++)
@@ -432,7 +456,7 @@ public class App extends javax.swing.JFrame
         PriorityQueueEntry top = null;
         Double currentDistance = null;
         Double estimatedDistance = null;
-        Integer currentNodeIndex = null;
+        int currentNodeIndex = -1;
         ArrayList<Integer> paths = null;
         
         while(!queue.isEmpty())
@@ -505,9 +529,6 @@ public class App extends javax.swing.JFrame
             mapsPanel.revalidate();
             mapsPanel.repaint();
             
-            /* Sesuaikan letak file HTML nya */
-//            browser.navigation().loadUrl("C:\\Users\\chris\\Desktop\\tucil\\IF2211_Tucil3\\bin\\index.html"); 
-            
         });
     }
     
@@ -568,7 +589,7 @@ public class App extends javax.swing.JFrame
         {
             FileWriter file = new FileWriter("./../../bin/public/firstNode.js");
             file.write("var firstNode = ");
-            if(this.firstNodeIndex == null)
+            if(this.firstNodeIndex == -1)
             {
                 file.write("{}");
             }
@@ -591,7 +612,7 @@ public class App extends javax.swing.JFrame
         {
             FileWriter file = new FileWriter("./../../bin/public/secondNode.js");
             file.write("var secondNode = ");
-            if(this.secondNodeIndex == null)
+            if(this.secondNodeIndex == -1)
             {
                 file.write("{}");
             }
