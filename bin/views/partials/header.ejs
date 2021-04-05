@@ -35,11 +35,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ml-auto">
-                <% if (page_name === 'result' || page_name === 'maps') {  %>
+                <% if (page_name === 'result') {  %>
                     <li class="nav-item active">
-                        <form method="get" action="/maps">
-                            <button class="btn btn-secondary btn-outline-secondary" type="submit" style="margin-left: 10px; margin-right: 10px">Clear Path</button>
-                        </form>
+                        <button class="btn btn-secondary btn-outline-secondary" onclick=clearPath() type="button" style="margin-left: 10px; margin-right: 10px">Clear Path</button>
                     </li>
                     <li class="nav-item">
                         <button type="button" class="btn btn-secondary btn-outline-secondary" onclick=createPath() style="margin-left: 10px; margin-right: 10px">Show Path</button>

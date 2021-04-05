@@ -5,7 +5,7 @@
             key: 'RRF5SbdgsyPTbw2a6yRBv1TAv7WTZ3RT',
             container: 'map',
             center: nodes[0].geometry.coordinates,
-            zoom: 15
+            zoom: 15.5
         });
 
         var markers = [];
@@ -120,10 +120,11 @@
                     marker.setPopup(popup).togglePopup();
                 }
             })
-            markers.forEach(function (marker, index){
-                console.log(marker);
-                console.log(index);
-            })
+        }
+
+        function clearPath(){
+            map.removeLayer('path')
+            map.removeSource('path');
         }
 
     </script>

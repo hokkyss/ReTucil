@@ -12,20 +12,16 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
 // Port website will run on
-app.listen(8000);
+const port = 8000 || process.env.PORT;
+const server = app.listen(port, () => {
+  console.log(`App running at port ${port}`);
+});
 
 // *** GET Routes - display pages ***
 
 // Root Route
 app.get('/', function (req, res) {
     var page_name = 'index'
-    res.render('pages/index', {
-        page_name : page_name
-    });
-});
-
-app.get('/maps', function (req, res) {
-    var page_name = 'maps'
     res.render('pages/index', {
         page_name : page_name
     });
