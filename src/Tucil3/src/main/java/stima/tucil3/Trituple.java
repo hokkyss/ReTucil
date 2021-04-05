@@ -75,7 +75,8 @@ public class Trituple {
         double deltaLambda = (this.lng - other.lng) * Math.PI/180;
         
         double a = (Math.pow(Math.sin(deltaPi / 2), 2)) + (Math.cos(pi1) * Math.cos(pi2) * Math.pow(Math.sin(deltaLambda / 2), 2));
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        // double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double c = 2 * Math.asin(Math.sqrt(a));
         
         return Constants.earthRadiusInMeter * c;
     }
