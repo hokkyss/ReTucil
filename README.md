@@ -5,6 +5,7 @@
 * [Setup](#setup)
 * [Execution](#execution)
 * [Features](#features)
+* [Catatan Penting](#catatan-penting)
 * [Contact](#contact)
 
 ## General info
@@ -36,6 +37,9 @@ Kelompok Re:Tucil menggunakan API dari TomTom Developer untuk menampilkan map pa
 * Laman About Us
 * Anda dapat memilih untuk menampilkan solusi algoritma A*
 * Terintegrasi dengan API Map untuk menampilkan graf pada file txt ke website lokal.
+
+## Catatan Penting
+* Karena lisensi dari salah satu dependency yang digunakan hanya bertahan selama sebulan (hingga 1 Mei 2021), perlu ada penggantian secret key agar project ini bisa dieksekusi.
 
 ## Contact
 Created by [@hokkyss](https://github.com/hokkyss) dan [@cjustinw](https://github.com/cjustinw).
