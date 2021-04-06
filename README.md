@@ -1,4 +1,4 @@
-# IF2211_Tucil3
+# Re:Tucil
 
 ## Table of contents
 * [General info](#general-info)
