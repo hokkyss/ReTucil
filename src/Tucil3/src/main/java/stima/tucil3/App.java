@@ -339,6 +339,7 @@ public class App extends javax.swing.JFrame
             this.numOfNodes = 0;
             this.numOfEdges = 0;
             this.resultBox.setText(Constants.emptyString);
+            this.answer.setText(Constants.solution);
         
             FileFilter filter = new FileNameExtensionFilter("Text files", "txt");
             this.browseDialog.setFileFilter(filter);
@@ -494,14 +495,6 @@ public class App extends javax.swing.JFrame
             {
                 adjacencyMatrix[i][j] = fileInput.nextInt();
                 SLD[i][j] = nodes.get(i).straightLineDistance(nodes.get(j));
-                /*
-                if(a == 0) adjacencyMatrix[i][j] = 0;
-                else
-                {
-                    adjacencyMatrix[i][j] = nodes.get(i).straightLineDistance(nodes.get(j));
-                    this.numOfEdges++;
-                }
-                */
             }
         }
     }
@@ -583,8 +576,7 @@ public class App extends javax.swing.JFrame
             panel = new JPanel(new BorderLayout());
             panel.add(view);
             panel.setSize(this.mapsPanel.getSize());
-            // 675 x 518
-            // panel.setSize(1200,800); //gmn cara buat size nya dinamis
+            
             mapsPanel.add(panel);
             mapsPanel.revalidate();
             mapsPanel.repaint();

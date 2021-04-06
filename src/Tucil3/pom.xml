@@ -40,7 +40,7 @@
               </goals>
               <configuration>
                 <classifier>spring-boot</classifier>
-                <mainClass>${fully.qualified.main.class}</mainClass>
+                <mainClass>${stima.tucil3.App}</mainClass>
               </configuration>
             </execution>
           </executions>
