@@ -287,8 +287,8 @@ public class App extends javax.swing.JFrame
         double sum = 0;
         for(int i = 0; i < path.size() - 1; i++)
         {
-            s = s + nodes.get(path.get(i)).toStringVer2() + " -> " + nodes.get(path.get(i + 1)).toStringVer2() + " = " + SLD[i][i + 1] + "\n";
-            sum += SLD[i][i + 1];
+            s = s + nodes.get(path.get(i)).toStringVer2() + " -> " + nodes.get(path.get(i + 1)).toStringVer2() + " = " + SLD[path.get(i)][path.get(i + 1)] + "\n";
+            sum += SLD[path.get(i)][path.get(i + 1)];
         }
         
         if(s.equals(Constants.emptyString))

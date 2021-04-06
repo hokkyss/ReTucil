@@ -1,1 +1,1 @@
-var secondNode = {"type": "Feature", "geometry": {"type": "Point", "coordinates": [107.60890754800417, -6.894912992468297]}, "properties": {"name": "Taman Sari - Gelap Nyawang"}};
+var secondNode = {"type": "Feature", "geometry": {"type": "Point", "coordinates": [107.610427, -6.89265]}, "properties": {"name": "TUJUH"}};
