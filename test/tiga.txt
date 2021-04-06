@@ -1,0 +1,25 @@
+12
+-6.953430 107.645610 Sibasa PT
+-6.953505 107.646905 Bahagia Permai VI 3 - 1
+-6.952946 107.644658 Matahari Laundry & Drycleaning
+-6.953012 107.645643 Bahagia Permai Raya 41
+-6.953111 107.646933 Cobakeun Creative Site
+-6.952560 107.644658 Jl. Bahagia Permai II
+-6.952594 107.645688 Warung Chimoet
+-6.952734 107.646920 Rumah Ilham Syahdan
+-6.952731 107.647284 Jl. Bahagia Permai VII 20 - 17
+-6.952069 107.644659 Jl. Bahagia Permai II 53 - 51
+-6.952136 107.645708 Jl. Bahagia Permai V
+-6.952266 107.646933 Jl. Bahagia Permai V Versi 2
+0 1 1 1 0 0 0 0 0 0 0 0
+1 0 0 0 1 0 0 0 1 0 0 0
+1 0 0 1 0 1 0 0 0 0 0 0
+1 0 1 0 1 0 1 0 0 0 0 0
+0 1 0 1 0 0 0 1 0 0 0 0
+0 0 1 0 0 0 1 0 0 1 0 0
+0 0 0 1 0 1 0 1 0 0 1 0
+0 0 0 0 1 0 1 0 1 0 0 1
+0 1 0 0 0 0 0 1 0 0 0 0
+0 0 0 0 0 1 0 0 0 0 1 0 
+0 0 0 0 0 0 1 0 0 1 0 1
+0 0 0 0 0 0 0 1 0 0 1 0
