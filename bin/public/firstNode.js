@@ -1,1 +1,1 @@
-var firstNode = {"type": "Feature", "geometry": {"type": "Point", "coordinates": [107.610395, -6.891927]}, "properties": {"name": "SATU"}};
+var firstNode = {"type": "Feature", "geometry": {"type": "Point", "coordinates": [107.61019953300554, -6.885112680505222]}, "properties": {"name": "Skywalk"}};

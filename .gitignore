@@ -32,3 +32,4 @@ hs_err_pid*
 # out
 /src/Tucil3/target/
 /bin/node_modules/
+/doc
