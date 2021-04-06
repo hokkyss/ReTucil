@@ -1,0 +1,59 @@
+13
+
+0.53327 101.45053 Hasanuddin - Jaya
+
+0.53336 101.44919 Hasanuddin - Nurul Amal
+
+0.53337 101.44992 Hasanuddin - Pelita
+
+0.53589 101.45026 Setia Budhi - Pelita
+
+0.5334 101.44756 Sudirman - Hasanuddin
+
+0.53582 101.4476 Sudirman - Setia Budhi
+
+0.53221 101.44753 Sudirman - Teuku Umar
+
+0.53057 101.44753 Sudirman - Teuku Zainal
+
+0.53218 101.45045 Teuku Umar - Jaya
+
+0.53222 101.4492 Teuku Umar - Nurul Amal
+
+0.53218 101.44861 Teuku Umar - Tamtama
+
+0.53053 101.45026 Teuku Zainal - Jaya
+
+0.53056 101.44865 Teuku Zainal - Tamtama
+
+0 0 1 0 0 0 0 0 1 0 0 0 0
+
+0 0 1 0 1 0 0 0 0 1 0 0 0
+
+1 1 0 1 0 0 0 0 0 0 0 0 0
+
+0 0 1 0 0 1 0 0 0 0 0 0 0
+
+0 1 0 0 0 1 1 0 0 0 0 0 0
+
+0 0 0 1 1 0 0 0 0 0 0 0 0
+
+0 0 0 0 1 0 0 1 0 0 1 0 0
+
+0 0 0 0 0 0 1 0 0 0 0 0 1
+
+1 0 0 0 0 0 0 0 0 1 0 1 0
+
+0 1 0 0 0 0 0 0 1 0 1 0 0
+
+0 0 0 0 0 0 1 0 0 1 0 0 1
+
+0 0 0 0 0 0 0 0 1 0 0 0 1
+
+0 0 0 0 0 0 0 1 0 0 1 1 0
+
+
+
+
+
+
